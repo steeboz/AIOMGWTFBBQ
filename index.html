@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caleb Williams 2025 Season Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .card {
+            background-color: #1F2937;
+            border: 1px solid #374151;
+        }
+        .stat-value {
+            color: #FBBF24;
+        }
+        .progress-bar-bg {
+            background-color: #374151;
+        }
+        .progress-bar-fill {
+            background-color: #FBBF24;
+        }
+        .toggle-bg:checked {
+            background-color: #FBBF24;
+        }
+        .toggle-dot {
+            transition: transform 0.2s ease-in-out;
+        }
+        .toggle-bg:checked + .toggle-dot {
+            transform: translateX(100%);
+        }
+        .gemini-button {
+             background: linear-gradient(90deg, #FBBF24, #F59E0B);
+        }
+        .loader {
+            border: 4px solid #374151;
+            border-left-color: #FBBF24;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        table th, table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(17, 24, 39, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+        }
+        .modal-content {
+            background-color: #1F2937;
+            border: 1px solid #374151;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            width: 90%;
+            max-width: 500px;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white p-4 sm:p-6 md:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white">Caleb Williams Season Tracker</h1>
+            <p class="text-gray-400 mt-2 text-lg">aiomgwtfbbq.com</p>
+        </header>
+
+        <!-- Main Dashboard -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+            <!-- Left Column: Input & Settings -->
+            <div class="lg:col-span-1 space-y-6">
+                <!-- Stats Input Card -->
+                <div class="card rounded-lg p-6 shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-4 text-white">Update Stats</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="gamesPlayed" class="block text-sm font-medium text-gray-300">Games Played</label>
+                            <input type="number" id="gamesPlayed" value="3" class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm">
+                        </div>
+                        <div>
+                            <label for="currentYards" class="block text-sm font-medium text-gray-300">Passing Yards</label>
+                            <input type="number" id="currentYards" value="715" class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm">
+                        </div>
+                        <div>
+                            <label for="currentTDs" class="block text-sm font-medium text-gray-300">Passing Touchdowns</label>
+                            <input type="number" id="currentTDs" value="7" class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm">
+                        </div>
+                        <button id="updateButton" class="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-2 px-4 rounded-lg transition duration-300">Update Dashboard</button>
+                    </div>
+                </div>
+
+                <!-- Season Length Toggle Card -->
+                <div class="card rounded-lg p-6 shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-4 text-white">Season Settings</h2>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-300">Season Length</span>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-sm font-medium" id="season-16-label">16 Games</span>
+                            <label for="seasonToggle" class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="seasonToggle" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-gray-600 rounded-full peer peer-focus:ring-4 peer-focus:ring-yellow-500/50 peer-checked:bg-yellow-500"></div>
+                                <span class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform transform peer-checked:translate-x-full"></span>
+                            </label>
+                            <span class="text-sm font-medium text-yellow-400" id="season-17-label">17 Games</span>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Gemini AI Features -->
+                <div class="card rounded-lg p-6 shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-4 text-white">Gemini AI Analysis</h2>
+                    <p class="text-gray-400 mb-4 text-sm">Get AI-powered insights on Caleb Williams' performance.</p>
+                    <div class="space-y-3">
+                         <button id="gameplanButton" class="w-full gemini-button text-gray-900 font-bold py-2 px-4 rounded-lg transition hover:opacity-90">✨ Generate Weekly Gameplan</button>
+                         <button id="reportButton" class="w-full gemini-button text-gray-900 font-bold py-2 px-4 rounded-lg transition hover:opacity-90">✨ Generate Mid-Season Report</button>
+                         <button id="postgameButton" class="w-full gemini-button text-gray-900 font-bold py-2 px-4 rounded-lg transition hover:opacity-90">✨ Analyze Past Game</button>
+                         <div id="postgame-selector" class="hidden space-y-2 mt-3">
+                            <select id="week-select" class="w-full bg-gray-700 border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm">
+                                <!-- Options will be populated by JS -->
+                            </select>
+                            <button id="generate-summary-button" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">Get Summary</button>
+                         </div>
+                         <button id="hotTakeButton" class="w-full gemini-button text-gray-900 font-bold py-2 px-4 rounded-lg transition hover:opacity-90">🔥 Generate Hot Take</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Stats Display -->
+            <div class="lg:col-span-2 space-y-6">
+                 <!-- Gemini Output -->
+                <div id="gemini-output-card" class="card rounded-lg p-6 shadow-lg hidden">
+                    <h2 id="gemini-title" class="text-2xl font-semibold mb-4 text-yellow-400"></h2>
+                    <div id="gemini-loader" class="flex justify-center items-center h-24">
+                        <div class="loader"></div>
+                    </div>
+                    <div id="gemini-content" class="text-gray-300 prose prose-invert max-w-none"></div>
+                </div>
+
+                <!-- Passing Yards Tracker -->
+                <div class="card rounded-lg p-6 shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-2 text-white">Passing Yards Progress</h2>
+                    <p class="text-gray-400 mb-4">Goal: 4,000 Yards</p>
+                    <div class="flex items-center justify-between text-lg mb-2">
+                        <span>Current: <span id="yards-current" class="stat-value font-bold">715</span></span>
+                        <span id="yards-percentage" class="font-semibold text-yellow-400">17.9%</span>
+                    </div>
+                    <div class="progress-bar-bg w-full rounded-full h-4 mb-4">
+                        <div id="yards-progress" class="progress-bar-fill h-4 rounded-full" style="width: 17.9%;"></div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
+                        <div>
+                            <p class="text-gray-400">Yards Remaining</p>
+                            <p id="yards-remaining" class="text-2xl font-bold text-white">3,285</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-400">Needed Per Game</p>
+                            <p id="yards-per-game" class="text-2xl font-bold text-white">234.6</p>
+                        </div>
+                    </div>
+                     <div class="mt-6 h-64">
+                        <canvas id="yardsChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Passing Touchdowns Tracker -->
+                <div class="card rounded-lg p-6 shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-2 text-white">Passing Touchdowns Progress</h2>
+                    <p class="text-gray-400 mb-4">Goal: 30 Touchdowns</p>
+                    <div class="flex items-center justify-between text-lg mb-2">
+                        <span>Current: <span id="tds-current" class="stat-value font-bold">7</span></span>
+                        <span id="tds-percentage" class="font-semibold text-yellow-400">23.3%</span>
+                    </div>
+                    <div class="progress-bar-bg w-full rounded-full h-4 mb-4">
+                        <div id="tds-progress" class="progress-bar-fill h-4 rounded-full" style="width: 23.3%;"></div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
+                        <div>
+                            <p class="text-gray-400">TDs Remaining</p>
+                            <p id="tds-remaining" class="text-2xl font-bold text-white">23</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-400">Needed Per Game</p>
+                            <p id="tds-per-game" class="text-2xl font-bold text-white">1.6</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 h-64">
+                        <canvas id="tdsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nail Polish Tracker -->
+            <div class="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="card rounded-lg p-6 shadow-lg md:col-span-2">
+                    <h2 class="text-2xl font-semibold mb-4 text-white">💅 Gameday Nail Polish Tracker</h2>
+                     <!-- Nail Performance Analysis Table -->
+                    <div class="mb-6">
+                         <h3 class="text-xl font-semibold mb-3 text-yellow-400">Performance by Color</h3>
+                         <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-left text-gray-300">
+                                <thead class="text-xs text-gray-400 uppercase bg-gray-800">
+                                    <tr>
+                                        <th>Color</th>
+                                        <th>Record (W-L)</th>
+                                        <th>Games Worn</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="nail-performance-body" class="divide-y divide-gray-700">
+                                    <!-- Performance data will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Game by Game Nail Color Table -->
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3 text-yellow-400">Game-by-Game Details</h3>
+                         <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-left text-gray-300">
+                                <thead class="text-xs text-gray-400 uppercase bg-gray-800">
+                                    <tr>
+                                        <th>Week</th>
+                                        <th>Opponent</th>
+                                        <th>Result</th>
+                                        <th>Nail Color</th>
+                                        <th>Gameday Nails</th>
+                                        <th>Edit</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="nail-log-body" class="divide-y divide-gray-700">
+                                    <!-- Log data will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weekly Highlights -->
+            <div class="card rounded-lg p-6 shadow-lg lg:col-span-3">
+                <h2 class="text-2xl font-semibold mb-4 text-white">Weekly Highlights</h2>
+                <div id="highlights-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                    <!-- Links will be dynamically inserted here -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Edit Nail Polish Modal -->
+    <div id="edit-nail-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 id="modal-title" class="text-2xl font-semibold mb-4 text-white">Edit Week 1 Details</h2>
+            <div class="space-y-4">
+                 <input type="hidden" id="modal-week-input">
+                <div>
+                    <label for="modal-result-input" class="block text-sm font-medium text-gray-300">Game Result (e.g., W 31-14)</label>
+                    <input type="text" id="modal-result-input" class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="modal-color-input" class="block text-sm font-medium text-gray-300">Nail Color</label>
+                    <input type="text" id="modal-color-input" class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="modal-link-input" class="block text-sm font-medium text-gray-300">Photo Link</label>
+                    <input type="url" id="modal-link-input" class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm">
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end space-x-3">
+                <button id="modal-cancel-button" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg transition">Cancel</button>
+                <button id="modal-save-button" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-2 px-4 rounded-lg transition">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Chart.js global config
+            Chart.defaults.color = '#9CA3AF';
+            Chart.defaults.borderColor = '#4B5563';
+
+            // DOM Elements
+            const gamesPlayedInput = document.getElementById('gamesPlayed');
+            const currentYardsInput = document.getElementById('currentYards');
+            const currentTDsInput = document.getElementById('currentTDs');
+            const updateButton = document.getElementById('updateButton');
+            const seasonToggle = document.getElementById('seasonToggle');
+            const gameplanButton = document.getElementById('gameplanButton');
+            const reportButton = document.getElementById('reportButton');
+            const postgameButton = document.getElementById('postgameButton');
+            const postgameSelector = document.getElementById('postgame-selector');
+            const weekSelect = document.getElementById('week-select');
+            const generateSummaryButton = document.getElementById('generate-summary-button');
+            const hotTakeButton = document.getElementById('hotTakeButton');
+            const geminiCard = document.getElementById('gemini-output-card');
+            const geminiTitle = document.getElementById('gemini-title');
+            const geminiLoader = document.getElementById('gemini-loader');
+            const geminiContent = document.getElementById('gemini-content');
+            const nailLogBody = document.getElementById('nail-log-body');
+            const editNailModal = document.getElementById('edit-nail-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalWeekInput = document.getElementById('modal-week-input');
+            const modalResultInput = document.getElementById('modal-result-input');
+            const modalColorInput = document.getElementById('modal-color-input');
+            const modalLinkInput = document.getElementById('modal-link-input');
+            const modalSaveButton = document.getElementById('modal-save-button');
+            const modalCancelButton = document.getElementById('modal-cancel-button');
+
+
+            const goalYards = 4000;
+            const goalTDs = 30;
+
+            let yardsChart, tdsChart;
+            
+             // To update nail polish data, edit the properties in the objects below
+            const gameSchedule = [
+                { week: 1, opponent: 'MIN Vikings', link: '#', result: 'L 24-27', nailColor: 'Black', nailPicLink: 'https://placehold.co/400x300/000000/FFFFFF?text=Week+1+Nails' },
+                { week: 2, opponent: '@DET Lions', link: '#', result: 'L 21-52', nailColor: 'Silver', nailPicLink: 'https://placehold.co/400x300/C0C0C0/000000?text=Week+2+Nails' },
+                { week: 3, opponent: 'DAL Cowboys', link: 'https://www.youtube.com/watch?v=SAN1qBEhW8o', result: 'W 31-14', nailColor: 'Black', nailPicLink: 'https://placehold.co/400x300/000000/FFFFFF?text=Week+3+Nails' },
+                { week: 4, opponent: '@LV Raiders', link: null, result: null, nailColor: null, nailPicLink: null },
+                { week: 5, opponent: 'BYE', link: null, result: null, nailColor: null, nailPicLink: null },
+                { week: 6, opponent: '@WAS Commanders', link: null, result: null, nailColor: null, nailPicLink: null },
+                { week: 7, opponent: 'NO Saints', link: null, result: null, nailColor: null, nailPicLink: null },
+                { week: 8, opponent: '@BAL Ravens', link: null, result: null, nailColor: null, nailPicLink: null },
+                { week: 9, opponent: '@CIN Bengals', link: null, result: null, nailColor: null, nailPicLink: null },
+                { week: 10, opponent: 'NYG Giants', link: null, result: null, nailColor: null, nailPicLink: null },
+                { week: 11, opponent: '@MIN Vikings', link: null, result: null, nailColor: null, nailPicLink: null },
+                { week: 12, opponent: 'PIT Steelers', link: null, result: null, nailColor: null, nailPicLink: null },
+                { week: 13, opponent: '@PHI Eagles', link: null, result: null, nailColor: null, nailPicLink: null },
+                { week: 14, opponent: '@GB Packers', link: null, result: null, nailColor: null, nailPicLink: null },
+                { week: 15, opponent: 'CLE Browns', link: null, result: null, nailColor: null, nailPicLink: null },
+                { week: 16, opponent: 'GB Packers', link: null, result: null, nailColor: null, nailPicLink: null },
+                { week: 17, opponent: '@SF 49ers', link: null, result: null, nailColor: null, nailPicLink: null },
+                { week: 18, opponent: 'DET Lions', link: null, result: null, nailColor: null, nailPicLink: null },
+            ];
+
+            function populateHighlights() {
+                const grid = document.getElementById('highlights-grid');
+                grid.innerHTML = '';
+                const gamesPlayed = parseInt(gamesPlayedInput.value) || 0;
+
+                gameSchedule.forEach(game => {
+                    let element;
+                    if (game.opponent === 'BYE') {
+                         element = `<div class="flex items-center justify-center bg-gray-800 p-4 rounded-lg opacity-50 h-full"><p class="font-semibold">Week ${game.week} - BYE</p></div>`;
+                    } else if (game.week <= gamesPlayed && game.link && game.link !== '#') {
+                         element = `<a href="${game.link}" target="_blank" rel="noopener noreferrer" class="block bg-gray-700 p-4 rounded-lg hover:bg-gray-600 transition"><p class="font-semibold text-white">Week ${game.week} vs ${game.opponent.replace('@', '')}</p><p class="text-sm text-yellow-400 mt-1">View Highlights &raquo;</p></a>`;
+                    } else if (game.week <= gamesPlayed) {
+                         element = `<div class="block bg-gray-700/50 p-4 rounded-lg"><p class="font-semibold text-gray-400">Week ${game.week} vs ${game.opponent.replace('@', '')}</p><p class="text-sm text-gray-500 mt-1">Link not set</p></div>`;
+                    }
+                    else {
+                        element = `<div class="block bg-gray-800 p-4 rounded-lg opacity-50"><p class="font-semibold text-gray-400">Week ${game.week} vs ${game.opponent.replace('@', '')}</p><p class="text-sm text-gray-500 mt-1">Upcoming</p></div>`;
+                    }
+                    grid.innerHTML += element;
+                });
+            }
+
+            function updateNailTracker() {
+                const gamesPlayed = parseInt(gamesPlayedInput.value) || 0;
+                const nailPerformanceBody = document.getElementById('nail-performance-body');
+                nailLogBody.innerHTML = '';
+                nailPerformanceBody.innerHTML = '';
+                
+                const performance = {};
+
+                for (let i = 0; i < gamesPlayed; i++) {
+                    const game = gameSchedule[i];
+                    if (game.opponent === 'BYE') continue;
+
+                    // Populate game-by-game log
+                    const logRow = document.createElement('tr');
+                    logRow.className = 'bg-gray-800/50 hover:bg-gray-700/50';
+                    logRow.innerHTML = `
+                        <td class="font-medium">${game.week}</td>
+                        <td>${game.opponent}</td>
+                        <td class="${game.result && game.result.startsWith('W') ? 'text-green-400' : 'text-red-400'}">${game.result || 'N/A'}</td>
+                        <td>${game.nailColor || 'N/A'}</td>
+                        <td>
+                            ${game.nailPicLink ? `<a href="${game.nailPicLink}" target="_blank" class="text-yellow-400 hover:underline">View Photo</a>` : 'N/A'}
+                        </td>
+                        <td>
+                            <button class="edit-nail-btn text-sm text-gray-400 hover:text-white" data-week="${game.week}">Edit</button>
+                        </td>
+                    `;
+                    nailLogBody.appendChild(logRow);
+
+                    // Aggregate performance data
+                    if (game.nailColor && game.result) {
+                        if (!performance[game.nailColor]) {
+                            performance[game.nailColor] = { wins: 0, losses: 0, games: 0 };
+                        }
+                        if (game.result.startsWith('W')) {
+                            performance[game.nailColor].wins++;
+                        } else if (game.result.startsWith('L')) {
+                            performance[game.nailColor].losses++;
+                        }
+                        performance[game.nailColor].games++;
+                    }
+                }
+
+                 // Populate performance table
+                for (const color in performance) {
+                    const stats = performance[color];
+                    const perfRow = document.createElement('tr');
+                    perfRow.className = 'bg-gray-800/50';
+                    perfRow.innerHTML = `
+                        <td class="font-medium text-white">${color}</td>
+                        <td class="font-semibold"><span class="text-green-400">${stats.wins}</span> - <span class="text-red-400">${stats.losses}</span></td>
+                        <td>${stats.games}</td>
+                    `;
+                    nailPerformanceBody.appendChild(perfRow);
+                }
+            }
+
+
+            function createOrUpdateCharts(currentYards, currentTDs, projectedYards, projectedTDs) {
+                 const commonOptions = {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top', labels: { color: '#D1D5DB' } }, tooltip: { backgroundColor: '#1F2937', titleColor: '#FBBF24', bodyColor: '#D1D5DB', borderColor: '#374151', borderWidth: 1 } },
+                    scales: { x: { grid: { display: false }, ticks: { color: '#9CA3AF' } }, y: { beginAtZero: true, grid: { color: '#374151' }, ticks: { color: '#9CA3AF' } } }
+                };
+                if (yardsChart) yardsChart.destroy();
+                yardsChart = new Chart(document.getElementById('yardsChart').getContext('2d'), { type: 'bar', data: { labels: ['Current', 'Goal', 'Projected'], datasets: [{ label: 'Passing Yards', data: [currentYards, goalYards, projectedYards], backgroundColor: ['#FBBF24', '#374151', '#F59E0B'], borderColor: ['#FBBF24', '#374151', '#F59E0B'], borderWidth: 1, borderRadius: 4 }] }, options: commonOptions });
+                if (tdsChart) tdsChart.destroy();
+                tdsChart = new Chart(document.getElementById('tdsChart').getContext('2d'), { type: 'bar', data: { labels: ['Current', 'Goal', 'Projected'], datasets: [{ label: 'Passing Touchdowns', data: [currentTDs, goalTDs, projectedTDs], backgroundColor: ['#FBBF24', '#374151', '#F59E0B'], borderColor: ['#FBBF24', '#374151', '#F59E0B'], borderWidth: 1, borderRadius: 4 }] }, options: commonOptions });
+            }
+
+            function updateDashboard() {
+                const gamesPlayed = parseInt(gamesPlayedInput.value) || 0;
+                const currentYards = parseInt(currentYardsInput.value) || 0;
+                const currentTDs = parseInt(currentTDsInput.value) || 0;
+                const totalGames = seasonToggle.checked ? 17 : 16;
+                document.getElementById('season-16-label').classList.toggle('text-yellow-400', !seasonToggle.checked);
+                document.getElementById('season-17-label').classList.toggle('text-yellow-400', seasonToggle.checked);
+                const gamesRemaining = Math.max(0, totalGames - gamesPlayed);
+                const yardsRemaining = Math.max(0, goalYards - currentYards);
+                const yardsPerGame = gamesRemaining > 0 ? (yardsRemaining / gamesRemaining) : 0;
+                const yardsPercentage = (currentYards / goalYards) * 100;
+                const projectedYards = gamesPlayed > 0 ? (currentYards / gamesPlayed) * totalGames : 0;
+                document.getElementById('yards-current').textContent = currentYards.toLocaleString();
+                document.getElementById('yards-percentage').textContent = `${yardsPercentage.toFixed(1)}%`;
+                document.getElementById('yards-progress').style.width = `${Math.min(100, yardsPercentage)}%`;
+                document.getElementById('yards-remaining').textContent = yardsRemaining.toLocaleString();
+                document.getElementById('yards-per-game').textContent = yardsPerGame.toFixed(1);
+                const tdsRemaining = Math.max(0, goalTDs - currentTDs);
+                const tdsPerGame = gamesRemaining > 0 ? (tdsRemaining / gamesRemaining) : 0;
+                const tdsPercentage = (currentTDs / goalTDs) * 100;
+                const projectedTDs = gamesPlayed > 0 ? (currentTDs / gamesPlayed) * totalGames : 0;
+                document.getElementById('tds-current').textContent = currentTDs.toLocaleString();
+                document.getElementById('tds-percentage').textContent = `${tdsPercentage.toFixed(1)}%`;
+                document.getElementById('tds-progress').style.width = `${Math.min(100, tdsPercentage)}%`;
+                document.getElementById('tds-remaining').textContent = tdsRemaining.toLocaleString();
+                document.getElementById('tds-per-game').textContent = tdsPerGame.toFixed(1);
+                createOrUpdateCharts(currentYards, currentTDs, Math.round(projectedYards), Math.round(projectedTDs));
+                populateHighlights();
+                updateNailTracker();
+            }
+            
+            async function callGemini(prompt, title) {
+                geminiTitle.textContent = title;
+                geminiContent.innerHTML = '';
+                geminiLoader.style.display = 'flex';
+                geminiCard.classList.remove('hidden');
+
+                const apiKey = ""; // API key is handled by the environment
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                const payload = { contents: [{ parts: [{ text: prompt }] }] };
+
+                let response;
+                let retries = 3;
+                let delay = 1000;
+
+                for (let i = 0; i < retries; i++) {
+                    try {
+                        response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        if (response.ok) break;
+                    } catch (error) {
+                        if (i === retries - 1) {
+                            geminiContent.innerHTML = `<p class="text-red-400">An error occurred while trying to connect to the Gemini API. Please try again later.</p>`;
+                            geminiLoader.style.display = 'none';
+                            return;
+                        }
+                    }
+                    await new Promise(res => setTimeout(res, delay));
+                    delay *= 2; // Exponential backoff
+                }
+
+                geminiLoader.style.display = 'none';
+
+                if (!response.ok) {
+                    geminiContent.innerHTML = `<p class="text-red-400">Error: Could not retrieve data from the Gemini API. Status: ${response.status}</p>`;
+                    return;
+                }
+                
+                try {
+                    const result = await response.json();
+                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (text) {
+                        geminiContent.innerHTML = text.replace(/\n/g, '<br>');
+                    } else {
+                        geminiContent.innerHTML = `<p class="text-red-400">Received an empty response from the Gemini API. Please try again.</p>`;
+                    }
+                } catch (error) {
+                    geminiContent.innerHTML = `<p class="text-red-400">Error parsing the response from the Gemini API.</p>`;
+                }
+            }
+
+            function openEditModal(week) {
+                const game = gameSchedule.find(g => g.week == week);
+                if (!game) return;
+
+                modalTitle.textContent = `Edit Week ${game.week} Details (vs ${game.opponent.replace('@','')})`;
+                modalWeekInput.value = game.week;
+                modalResultInput.value = game.result || '';
+                modalColorInput.value = game.nailColor || '';
+                modalLinkInput.value = game.nailPicLink || '';
+                
+                editNailModal.classList.remove('hidden');
+            }
+
+            function closeEditModal() {
+                editNailModal.classList.add('hidden');
+            }
+
+            function saveNailData() {
+                const week = modalWeekInput.value;
+                const game = gameSchedule.find(g => g.week == week);
+                if (game) {
+                    game.result = modalResultInput.value;
+                    game.nailColor = modalColorInput.value;
+                    game.nailPicLink = modalLinkInput.value;
+                }
+                closeEditModal();
+                updateDashboard();
+            }
+
+            
+            gameplanButton.addEventListener('click', () => {
+                const gamesPlayed = parseInt(gamesPlayedInput.value) || 0;
+                let nextGameIndex = gamesPlayed;
+                let nextGame = gameSchedule[nextGameIndex];
+                
+                if (nextGame && nextGame.opponent === 'BYE') {
+                    nextGameIndex++;
+                    nextGame = gameSchedule[nextGameIndex];
+                }
+
+                if (!nextGame) {
+                    alert("The season is over! No upcoming game to generate a plan for.");
+                    return;
+                }
+
+                const currentYards = parseInt(currentYardsInput.value);
+                const currentTDs = parseInt(currentTDsInput.value);
+                
+                const prompt = `Act as an expert NFL analyst. Caleb Williams of the Chicago Bears has played ${gamesPlayed} games. His current stats are ${currentYards} passing yards and ${currentTDs} touchdowns. His season goals are 4,000 yards and 30 TDs. His next game is against the ${nextGame.opponent}. Provide a concise, single-paragraph game plan for Caleb Williams for this upcoming matchup. Focus on how he can exploit the opponent's defensive weaknesses and continue making progress toward his season goals.`;
+                callGemini(prompt, `Gameplan vs. ${nextGame.opponent.replace('@', '')}`);
+            });
+
+            reportButton.addEventListener('click', () => {
+                 const gamesPlayed = parseInt(gamesPlayedInput.value) || 0;
+                 if (gamesPlayed < 8) {
+                     alert("A mid-season report is best generated after at least 8 games have been played.");
+                     return;
+                 }
+                 const currentYards = parseInt(currentYardsInput.value);
+                 const currentTDs = parseInt(currentTDsInput.value);
+                 const totalGames = seasonToggle.checked ? 17 : 16;
+                 const projectedYards = Math.round((currentYards / gamesPlayed) * totalGames);
+                 const projectedTDs = Math.round((currentTDs / gamesPlayed) * totalGames);
+
+                 const prompt = `Act as an expert NFL analyst providing a mid-season report for Chicago Bears QB Caleb Williams. He has played ${gamesPlayed} games.
+Current Stats: ${currentYards} passing yards, ${currentTDs} touchdowns.
+Season Goals: 4,000 yards, 30 TDs.
+Projected Stats: ${projectedYards} yards, ${projectedTDs} touchdowns.
+Based on this information, provide a concise report. In the first paragraph, summarize his performance so far. In the second paragraph, analyze his likelihood of hitting his season goals and what he needs to improve in the second half of the season.`;
+                 callGemini(prompt, `Mid-Season Report: Week ${gamesPlayed}`);
+            });
+            
+            postgameButton.addEventListener('click', () => {
+                postgameSelector.classList.toggle('hidden');
+                const gamesPlayed = parseInt(gamesPlayedInput.value) || 0;
+                weekSelect.innerHTML = '';
+                if (gamesPlayed === 0) {
+                     weekSelect.innerHTML = '<option>No games played yet</option>';
+                     return;
+                }
+                for(let i = 1; i <= gamesPlayed; i++) {
+                    const game = gameSchedule.find(g => g.week === i);
+                    if (game && game.opponent !== 'BYE') {
+                        const option = document.createElement('option');
+                        option.value = i;
+                        option.textContent = `Week ${i} vs ${game.opponent.replace('@','')}`;
+                        weekSelect.appendChild(option);
+                    }
+                }
+            });
+
+            generateSummaryButton.addEventListener('click', () => {
+                const selectedWeek = weekSelect.value;
+                if (!selectedWeek) return;
+
+                const game = gameSchedule.find(g => g.week == selectedWeek);
+                const currentYards = parseInt(currentYardsInput.value);
+                const currentTDs = parseInt(currentTDsInput.value);
+
+                const prompt = `Act as an expert NFL analyst. You are writing a post-game summary for Chicago Bears QB Caleb Williams' performance in Week ${selectedWeek} against the ${game.opponent.replace('@', '')}. Provide a concise, one-paragraph summary of his performance in that specific game. You can be creative and invent plausible stats or key moments for that game that would align with his overall season trajectory. His cumulative stats after ${gamesPlayedInput.value} games are ${currentYards} yards and ${currentTDs} touchdowns.`;
+                callGemini(prompt, `Post-Game Summary: Week ${selectedWeek}`);
+            });
+
+            hotTakeButton.addEventListener('click', () => {
+                const gamesPlayed = parseInt(gamesPlayedInput.value);
+                const currentYards = parseInt(currentYardsInput.value);
+                const currentTDs = parseInt(currentTDsInput.value);
+                const prompt = `Act as a fiery, opinionated sports talk show host. You need to deliver a "hot take" about Chicago Bears QB Caleb Williams. Based on his current stats (${currentYards} yards and ${currentTDs} touchdowns after ${gamesPlayed} games), give a bold, controversial, and short prediction or opinion about his future performance, his team's chances, or his legacy. Make it sound like a classic sports radio hot take.`;
+                callGemini(prompt, '🔥 Hot Take! 🔥');
+            });
+
+            // Event listener for the dynamically created edit buttons
+            nailLogBody.addEventListener('click', (event) => {
+                if (event.target.classList.contains('edit-nail-btn')) {
+                    const week = event.target.dataset.week;
+                    openEditModal(week);
+                }
+            });
+            
+            modalSaveButton.addEventListener('click', saveNailData);
+            modalCancelButton.addEventListener('click', closeEditModal);
+
+            updateButton.addEventListener('click', updateDashboard);
+            seasonToggle.addEventListener('change', updateDashboard);
+
+            // Initial load
+            updateDashboard();
+        });
+    </script>
+</body>
+</html>
+

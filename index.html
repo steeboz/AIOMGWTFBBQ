@@ -3,553 +3,958 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caleb Williams Season Tracker - aiomgwtfbbq.com</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Caleb Williams 2025 Season Tracker</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #111827; /* Dark background as a fallback */
-            background-image: url('https://pbs.twimg.com/media/GW94-C9WIAAHKik?format=jpg&name=large');
-            background-size: cover;
-            background-position: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0B162A 0%, #C83803 30%, #FF6B35 50%, #C83803 70%, #0B162A 100%);
             background-attachment: fixed;
+            min-height: 100vh;
+            padding: 20px;
         }
-        header h1, header p {
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
         }
-        .card {
-            background-color: rgba(31, 41, 55, 0.85); /* #1F2937 at 85% opacity */
-            border: 1px solid rgba(55, 65, 81, 0.7); /* #374151 with adjusted opacity */
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px); /* For Safari */
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease;
         }
-        .stat-value {
-            color: #FBBF24;
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        .progress-bar-bg {
-            background-color: #374151;
+
+        .header h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            font-weight: 900;
+            letter-spacing: -1px;
         }
-        .progress-bar-fill {
-            background-image: linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #6366f1, #8b5cf6);
+
+        .header p {
+            font-size: 1.6em;
+            color: #FFB347;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            font-weight: 600;
         }
-        .toggle-bg:checked {
-            background-color: #FBBF24;
+
+        .header .subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1em;
+            margin-top: 10px;
+            font-weight: 400;
         }
-        .toggle-dot {
-            transition: transform 0.3s ease-in-out;
+
+        .toggle-container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease 0.2s both;
         }
-        .toggle-bg:checked + .toggle-dot {
-            transform: translateX(100%);
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        .loading-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.7);
+
+        .toggle-header {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            z-index: 10;
-            border-radius: 0.5rem;
+            flex-wrap: wrap;
+            gap: 20px;
         }
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #FBBF24;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
+
+        .toggle-info h3 {
+            color: white;
+            font-size: 1.4em;
+            margin-bottom: 5px;
+            font-weight: 700;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+
+        .toggle-info p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95em;
         }
-        #aiResponse {
-            white-space: pre-wrap;
-            background-color: rgba(17, 24, 39, 0.8);
-            border-radius: 0.5rem;
-            padding: 1rem;
+
+        .toggle-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .toggle-btn {
+            padding: 16px 40px;
+            font-size: 1.15em;
+            font-weight: 700;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .toggle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .toggle-btn.active {
+            background: linear-gradient(135deg, #FF6B35, #C83803);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(200, 56, 3, 0.5);
+            border-color: #FF6B35;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            animation: fadeIn 1s ease 0.3s both;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .stat-card p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95em;
+            margin-bottom: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-card h2 {
+            color: white;
+            font-size: 3.5em;
+            font-weight: 900;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .stat-card h2.highlight {
+            color: #FFB347;
+        }
+
+        .goal-section {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            padding: 35px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease 0.4s both;
+        }
+
+        .goal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .goal-header h2 {
+            color: white;
+            font-size: 2.2em;
+            font-weight: 800;
+            text-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .goal-header .goal-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95em;
+            margin-top: 5px;
+        }
+
+        .goal-header .current-stat {
+            text-align: right;
+        }
+
+        .goal-header .current-stat h3 {
+            color: white;
+            font-size: 3.5em;
+            font-weight: 900;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .goal-header .current-stat p {
+            color: #FFB347;
+            font-size: 0.9em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .progress-bar {
+            background: rgba(0, 0, 0, 0.3);
+            height: 35px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF6B35, #FFB347, #FF6B35);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite linear;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 20px;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        .progress-fill span {
+            color: white;
+            font-weight: 800;
+            font-size: 1.1em;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .goal-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .goal-stat-box {
+            background: rgba(11, 22, 42, 0.6);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .goal-stat-box:hover {
+            background: rgba(11, 22, 42, 0.8);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .goal-stat-box p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .goal-stat-box h3 {
+            color: white;
+            font-size: 2em;
+            font-weight: 800;
+        }
+
+        .goal-stat-box h3.needed {
+            color: #FFB347;
+        }
+
+        .goal-stat-box h3.good {
+            color: #4CAF50;
+        }
+
+        .goal-stat-box h3.warning {
+            color: #FFC107;
+        }
+
+        .schedule-section {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            padding: 35px;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease 0.5s both;
+        }
+
+        .schedule-section h2 {
+            color: white;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 800;
+            text-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .schedule-grid {
+            display: grid;
+            gap: 18px;
+        }
+
+        .game-card {
+            background: rgba(11, 22, 42, 0.7);
+            padding: 25px;
+            border-radius: 15px;
+            display: grid;
+            grid-template-columns: 90px 1fr 160px 160px;
+            align-items: center;
+            gap: 25px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .game-card:hover {
+            background: rgba(11, 22, 42, 0.9);
+            transform: translateX(8px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .game-card.played {
+            border-left: 5px solid #4CAF50;
+        }
+
+        .game-card.upcoming {
+            border-left: 5px solid #FF6B35;
+        }
+
+        .week-label {
+            font-weight: 800;
+            color: #FFB347;
+            font-size: 1.15em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .game-info h3 {
+            color: white;
+            font-size: 1.35em;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .game-info p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        .game-time {
+            text-align: center;
+        }
+
+        .game-time p {
+            color: white;
+            font-size: 1.05em;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .game-time span {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9em;
+        }
+
+        .game-link a {
+            display: inline-block;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #FF6B35, #C83803);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            text-align: center;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9em;
+            box-shadow: 0 4px 15px rgba(200, 56, 3, 0.3);
+        }
+
+        .game-link a:hover {
+            background: linear-gradient(135deg, #FFB347, #FF6B35);
+            transform: scale(1.08) translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255, 107, 53, 0.5);
+        }
+
+        .game-link a.preview {
+            background: rgba(11, 22, 42, 0.9);
+            border: 2px solid #FF6B35;
+        }
+
+        .game-link a.preview:hover {
+            background: linear-gradient(135deg, #FF6B35, #C83803);
+            border-color: #FFB347;
+        }
+
+        .bye-week {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.3), rgba(255, 152, 0, 0.2));
+            border-left: 5px solid #FFC107;
+            justify-content: center;
+            text-align: center;
+            grid-template-columns: 1fr;
+            padding: 35px;
+        }
+
+        .bye-week h3 {
+            color: #FFC107;
+            font-size: 1.8em;
+            font-weight: 800;
+            text-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 40px;
+            font-size: 0.95em;
+            animation: fadeIn 1s ease 0.6s both;
+        }
+
+        footer p {
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .game-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .toggle-header {
+                flex-direction: column;
+            }
+
+            .header h1 {
+                font-size: 2.2em;
+            }
+
+            .goal-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .goal-header .current-stat {
+                text-align: center;
+            }
+
+            .toggle-buttons {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .toggle-btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-200 p-4 sm:p-6 md:p-8">
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🐻 Caleb Williams 💅</h1>
+            <p>2025 Season Progress Tracker</p>
+            <p class="subtitle">Chicago Bears • QB #18</p>
+        </div>
 
-    <div class="max-w-7xl mx-auto">
-        
-        <header class="text-center mb-10">
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">Caleb Williams Season Tracker</h1>
-            <p class="text-lg text-gray-300 mt-2">aiomgwtfbbq.com</p>
-        </header>
+        <!-- Toggle Switch -->
+        <div class="toggle-container">
+            <div class="toggle-header">
+                <div class="toggle-info">
+                    <h3>Game Schedule</h3>
+                    <p>Select season length to see required pace</p>
+                </div>
+                <div class="toggle-buttons">
+                    <button class="toggle-btn" onclick="setSchedule(16)">16 Games</button>
+                    <button class="toggle-btn active" onclick="setSchedule(17)">17 Games</button>
+                </div>
+            </div>
+        </div>
 
-        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
-            <!-- Left Column -->
-            <div class="flex flex-col gap-8">
-                <!-- Update Stats Card -->
-                <div class="card rounded-lg p-6 shadow-lg">
-                    <h2 class="text-2xl font-semibold mb-4 text-white">Update Stats</h2>
-                    <div class="space-y-4">
-                        <div>
-                            <label for="gamesPlayed" class="block text-sm font-medium text-gray-300">Games Played</label>
-                            <input type="number" id="gamesPlayed" value="4" class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm">
-                        </div>
-                        <div>
-                            <label for="currentYards" class="block text-sm font-medium text-gray-300">Passing Yards</label>
-                            <input type="number" id="currentYards" value="927" class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm">
-                        </div>
-                        <div>
-                            <label for="currentTDs" class="block text-sm font-medium text-gray-300">Passing Touchdowns</label>
-                            <input type="number" id="currentTDs" value="8" class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm">
-                        </div>
-                        <button id="updateButton" class="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-2 px-4 rounded-lg transition duration-300">Update Dashboard</button>
+        <!-- Current Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <p>Games Played</p>
+                <h2>5</h2>
+            </div>
+            <div class="stat-card">
+                <p>Games Remaining</p>
+                <h2 class="highlight" id="gamesRemaining">12</h2>
+            </div>
+        </div>
+
+        <!-- Passing Yards Section -->
+        <div class="goal-section">
+            <div class="goal-header">
+                <div>
+                    <h2>🎯 Passing Yards</h2>
+                    <p class="goal-subtitle">Goal: 4,000 yards</p>
+                </div>
+                <div class="current-stat">
+                    <h3>1,179</h3>
+                    <p>current</p>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 29.5%">
+                    <span>29.5%</span>
+                </div>
+            </div>
+            <div class="goal-stats">
+                <div class="goal-stat-box">
+                    <p>Yards Needed</p>
+                    <h3>2,821</h3>
+                </div>
+                <div class="goal-stat-box">
+                    <p>Per Game Needed</p>
+                    <h3 class="needed" id="yardsPerGame">235.1</h3>
+                </div>
+                <div class="goal-stat-box">
+                    <p>Current Pace</p>
+                    <h3 class="good" id="yardsPace">4,006</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Touchdown Passes Section -->
+        <div class="goal-section">
+            <div class="goal-header">
+                <div>
+                    <h2>🏈 Touchdown Passes</h2>
+                    <p class="goal-subtitle">Goal: 30 TDs</p>
+                </div>
+                <div class="current-stat">
+                    <h3>9</h3>
+                    <p>current</p>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 30%">
+                    <span>30.0%</span>
+                </div>
+            </div>
+            <div class="goal-stats">
+                <div class="goal-stat-box">
+                    <p>TDs Needed</p>
+                    <h3>21</h3>
+                </div>
+                <div class="goal-stat-box">
+                    <p>Per Game Needed</p>
+                    <h3 class="needed" id="tdsPerGame">1.75</h3>
+                </div>
+                <div class="goal-stat-box">
+                    <p>Current Pace</p>
+                    <h3 class="good" id="tdsPace">30.6</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Schedule Section -->
+        <div class="schedule-section">
+            <h2>📅 2025 Season Schedule</h2>
+            <div class="schedule-grid">
+                <!-- Week 1 -->
+                <div class="game-card played">
+                    <div class="week-label">Week 1</div>
+                    <div class="game-info">
+                        <h3>vs Minnesota Vikings</h3>
+                        <p>W 25-17</p>
                     </div>
-                     <p class="text-center text-xs text-gray-400 mt-4">
-                        <a href="https://www.espn.com/nfl/player/stats/_/id/4431611/caleb-williams" target="_blank" rel="noopener noreferrer" class="hover:text-yellow-400 underline">Verify stats on ESPN</a>
-                    </p>
+                    <div class="game-time">
+                        <p>Monday, 8:15 PM</p>
+                        <span>Sept 8</span>
+                    </div>
+                    <div class="game-link">
+                        <a href="https://www.youtube.com/watch?v=ccKfthnzIDI" target="_blank">Highlights</a>
+                    </div>
                 </div>
 
-                <!-- Season Length Toggle Card -->
-                <div class="card rounded-lg p-6 shadow-lg">
-                    <h2 class="text-2xl font-semibold mb-4 text-white">Season Settings</h2>
-                    <div class="flex items-center justify-center space-x-4">
-                        <span class="font-medium text-gray-300">16 Games</span>
-                        <label for="seasonToggle" class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" id="seasonToggle" class="sr-only peer toggle-bg">
-                            <div class="w-11 h-6 bg-gray-600 rounded-full peer-checked:bg-yellow-500 transition-colors"></div>
-                            <div class="absolute left-1 top-1 bg-white border-gray-300 border rounded-full h-4 w-4 transition-transform toggle-dot peer-checked:translate-x-full"></div>
-                        </label>
-                        <span class="font-medium text-gray-300">17 Games</span>
+                <!-- Week 2 -->
+                <div class="game-card played">
+                    <div class="week-label">Week 2</div>
+                    <div class="game-info">
+                        <h3>@ Detroit Lions</h3>
+                        <p>W 27-24</p>
+                    </div>
+                    <div class="game-time">
+                        <p>Sunday, 12:00 PM</p>
+                        <span>Sept 14</span>
+                    </div>
+                    <div class="game-link">
+                        <a href="https://www.youtube.com/watch?v=fnEUGYicUpI" target="_blank">Highlights</a>
                     </div>
                 </div>
 
-                 <!-- Gemini AI Analysis Card -->
-                <div id="gemini-card" class="card rounded-lg p-6 shadow-lg relative">
-                    <h2 class="text-2xl font-semibold mb-4 text-white">Gemini AI Analysis</h2>
-                    <p class="text-sm text-gray-400 mb-4">Get AI-powered insights on Caleb Williams' performance.</p>
-                    <div class="space-y-3">
-                        <button id="generateGameplan" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">Generate Weekly Gameplan</button>
-                        <button id="generateReport" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 disabled:bg-gray-500 disabled:cursor-not-allowed" disabled>Generate Mid-Season Report</button>
-                         <button id="analyzePastGame" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">Analyze Past Game</button>
-                        <button id="generateHotTake" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">🔥 Generate Hot Take</button>
+                <!-- Week 3 -->
+                <div class="game-card played">
+                    <div class="week-label">Week 3</div>
+                    <div class="game-info">
+                        <h3>vs Indianapolis Colts</h3>
+                        <p>W 28-20</p>
                     </div>
-                    <div id="aiResponseContainer" class="mt-4" style="display: none;">
-                        <h3 id="aiResponseTitle" class="text-xl font-semibold text-yellow-400 mb-2"></h3>
-                        <p id="aiResponse" class="text-gray-300 text-sm"></p>
+                    <div class="game-time">
+                        <p>Sunday, 12:00 PM</p>
+                        <span>Sept 22</span>
                     </div>
-                    <div id="loading" class="loading-overlay" style="display: none;">
-                        <div class="loader"></div>
+                    <div class="game-link">
+                        <a href="https://www.youtube.com/watch?v=SAN1qBEhW8o&t" target="_blank">Highlights</a>
+                    </div>
+                </div>
+
+                <!-- Week 4 -->
+                <div class="game-card played">
+                    <div class="week-label">Week 4</div>
+                    <div class="game-info">
+                        <h3>@ Las Vegas Raiders</h3>
+                        <p>W 23-20</p>
+                    </div>
+                    <div class="game-time">
+                        <p>Sunday, 3:25 PM</p>
+                        <span>Sept 29</span>
+                    </div>
+                    <div class="game-link">
+                        <a href="https://www.youtube.com/watch?v=GBX1Hl-CcGU&t" target="_blank">Highlights</a>
+                    </div>
+                </div>
+
+                <!-- Week 5 - BYE -->
+                <div class="game-card bye-week">
+                    <h3>🏖️ BYE WEEK 🏖️</h3>
+                </div>
+
+                <!-- Week 6 -->
+                <div class="game-card played">
+                    <div class="week-label">Week 6</div>
+                    <div class="game-info">
+                        <h3>@ Washington Commanders</h3>
+                        <p>W 25-24</p>
+                    </div>
+                    <div class="game-time">
+                        <p>Monday, 8:15 PM</p>
+                        <span>Oct 14</span>
+                    </div>
+                    <div class="game-link">
+                        <a href="https://www.youtube.com/watch?v=IzjvQG8HtWc" target="_blank">Highlights</a>
+                    </div>
+                </div>
+
+                <!-- Week 7 -->
+                <div class="game-card upcoming">
+                    <div class="week-label">Week 7</div>
+                    <div class="game-info">
+                        <h3>vs New Orleans Saints</h3>
+                        <p>Soldier Field</p>
+                    </div>
+                    <div class="game-time">
+                        <p>Sunday, 12:00 PM</p>
+                        <span>Oct 20</span>
+                    </div>
+                    <div class="game-link">
+                        <a href="https://www.espn.com/nfl/game/_/gameId/401671745" target="_blank" class="preview">Preview</a>
+                    </div>
+                </div>
+
+                <!-- Week 8 -->
+                <div class="game-card upcoming">
+                    <div class="week-label">Week 8</div>
+                    <div class="game-info">
+                        <h3>@ Baltimore Ravens</h3>
+                        <p>M&T Bank Stadium</p>
+                    </div>
+                    <div class="game-time">
+                        <p>Sunday, 12:00 PM</p>
+                        <span>Oct 27</span>
+                    </div>
+                    <div class="game-link">
+                        <a href="https://www.espn.com/nfl/game/_/gameId/401671753" target="_blank" class="preview">Preview</a>
+                    </div>
+                </div>
+
+                <!-- Week 9 -->
+                <div class="game-card upcoming">
+                    <div class="week-label">Week 9</div>
+                    <div class="game-info">
+                        <h3>@ Cincinnati Bengals</h3>
+                        <p>Paycor Stadium</p>
+                    </div>
+                    <div class="game-time">
+                        <p>Sunday, 12:00 PM</p>
+                        <span>Nov 2</span>
+                    </div>
+                    <div class="game-link">
+                        <a href="https://www.espn.com/nfl/matchup?gameId=401671760" target="_blank" class="preview">Preview</a>
+                    </div>
+                </div>
+
+                <!-- Week 10 -->
+                <div class="game-card upcoming">
+                    <div class="week-label">Week 10</div>
+                    <div class="game-info">
+                        <h3>vs Dallas Cowboys</h3>
+                        <p>Soldier Field</p>
+                    </div>
+                    <div class="game-time">
+                        <p>Sunday, 3:25 PM</p>
+                        <span>Nov 9</span>
+                    </div>
+                    <div class="game-link">
+                        <a href="https://www.espn.com/nfl/matchup?gameId=401671766" target="_blank" class="preview">Preview</a>
+                    </div>
+                </div>
+
+                <!-- Week 11 -->
+                <div class="game-card upcoming">
+                    <div class="week-label">Week 11</div>
+                    <div class="game-info">
+                        <h3>vs Green Bay Packers</h3>
+                        <p>Soldier Field</p>
+                    </div>
+                    <div class="game-time">
+                        <p>Sunday, 12:00 PM</p>
+                        <span>Nov 16</span>
+                    </div>
+                    <div class="game-link">
+                        <a href="https://www.youtube.com/watch?v=DmA08lBOa68" target="_blank" class="preview">FTP</a>
+                    </div>
+                </div>
+
+                <!-- Week 12 -->
+                <div class="game-card upcoming">
+                    <div class="week-label">Week 12</div>
+                    <div class="game-info">
+                        <h3>@ Minnesota Vikings</h3>
+                        <p>U.S. Bank Stadium</p>
+                    </div>
+                    <div class="game-time">
+                        <p>Sunday, 12:00 PM</p>
+                        <span>Nov 23</span>
+                    </div>
+                    <div class="game-link">
+                        <a href="https://www.espn.com/nfl/matchup?gameId=401671780" target="_blank" class="preview">Preview</a>
+                    </div>
+                </div>
+
+                <!-- Week 13 -->
+                <div class="game-card upcoming">
+                    <div class="week-label">Week 13</div>
+                    <div class="game-info">
+                        <h3>@ Philadelphia Eagles</h3>
+                        <p>Lincoln Financial Field</p>
+                    </div>
+                    <div class="game-time">
+                        <p>Friday, 2:30 PM</p>
+                        <span>Nov 28 (Black Friday)</span>
+                    </div>
+                    <div class="game-link">
+                        <a href="https://www.espn.com/nfl/matchup?gameId=401671787" target="_blank" class="preview">Preview</a>
+                    </div>
+                </div>
+
+                <!-- Week 14 -->
+                <div class="game-card upcoming">
+                    <div class="week-label">Week 14</div>
+                    <div class="game-info">
+                        <h3>@ Cleveland Browns</h3>
+                        <p>Cleveland Browns Stadium</p>
+                    </div>
+                    <div class="game-time">
+                        <p>Sunday, 12:00 PM</p>
+                        <span>Dec 7</span>
+                    </div>
+                    <div class="game-link">
+                        <a href="https://www.espn.com/nfl/matchup?gameId=401671792" target="_blank" class="preview">Preview</a>
+                    </div>
+                </div>
+
+                <!-- Week 15 -->
+                <div class="game-card upcoming">
+                    <div class="week-label">Week 15</div>
+                    <div class="game-info">
+                        <h3>vs Pittsburgh Steelers</h3>
+                        <p>Soldier Field</p>
+                    </div>
+                    <div class="game-time">
+                        <p>Sunday, 12:00 PM</p>
+                        <span>Dec 14</span>
+                    </div>
+                    <div class="game-link">
+                        <a href="https://www.espn.com/nfl/matchup?gameId=401671799" target="_blank" class="preview">Preview</a>
+                    </div>
+                </div>
+
+                <!-- Week 16 -->
+                <div class="game-card upcoming">
+                    <div class="week-label">Week 16</div>
+                    <div class="game-info">
+                        <h3>vs Green Bay Packers</h3>
+                        <p>Soldier Field</p>
+                    </div>
+                    <div class="game-time">
+                        <p>Saturday, TBD</p>
+                        <span>Dec 20</span>
+                    </div>
+                    <div class="game-link">
+                        <a href="https://www.youtube.com/watch?v=DmA08lBOa68" target="_blank" class="preview">FTP</a>
+                    </div>
+                </div>
+
+                <!-- Week 17 -->
+                <div class="game-card upcoming">
+                    <div class="week-label">Week 17</div>
+                    <div class="game-info">
+                        <h3>@ San Francisco 49ers</h3>
+                        <p>Levi's Stadium</p>
+                    </div>
+                    <div class="game-time">
+                        <p>Sunday, 7:20 PM</p>
+                        <span>Dec 28 (SNF)</span>
+                    </div>
+                    <div class="game-link">
+                        <a href="https://www.espn.com/nfl/matchup?gameId=401671812" target="_blank" class="preview">Preview</a>
+                    </div>
+                </div>
+
+                <!-- Week 18 -->
+                <div class="game-card upcoming">
+                    <div class="week-label">Week 18</div>
+                    <div class="game-info">
+                        <h3>vs Detroit Lions</h3>
+                        <p>Soldier Field</p>
+                    </div>
+                    <div class="game-time">
+                        <p>TBD</p>
+                        <span>Jan 3/4</span>
+                    </div>
+                    <div class="game-link">
+                        <a href="https://www.espn.com/nfl/matchup?gameId=401671820" target="_blank" class="preview">Preview</a>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Main Content Area -->
-            <div class="lg:col-span-2 flex flex-col gap-8">
-                <!-- Passing Yards Progress Card -->
-                <div class="card rounded-lg p-6 shadow-lg">
-                    <div class="flex justify-between items-start mb-2">
-                        <div>
-                            <h2 class="text-2xl font-semibold text-white">Passing Yards Progress</h2>
-                            <p class="text-sm text-gray-400">Goal: <span id="yardGoalText">4,000</span> Yards</p>
-                        </div>
-                        <div class="text-right">
-                            <span id="yardsPercentage" class="text-2xl font-bold text-green-400">0%</span>
-                        </div>
-                    </div>
-                     <div class="mb-4">
-                        <div class="w-full progress-bar-bg rounded-full h-4">
-                            <div id="yardsProgressBar" class="progress-bar-fill h-4 rounded-full" style="width: 0%;"></div>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
-                        <div>
-                            <p class="text-sm text-gray-400">Current</p>
-                            <p id="currentYardsText" class="text-3xl font-bold stat-value">0</p>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-400">Yards Remaining</p>
-                            <p id="yardsRemaining" class="text-3xl font-bold text-white">4,000</p>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-400">Needed Per Game</p>
-                            <p id="yardsPerGame" class="text-3xl font-bold text-white">235.3</p>
-                        </div>
-                    </div>
-                    <div class="mt-6 h-64 sm:h-80">
-                        <canvas id="yardsChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Passing Touchdowns Progress Card -->
-                <div class="card rounded-lg p-6 shadow-lg">
-                     <div class="flex justify-between items-start mb-2">
-                        <div>
-                            <h2 class="text-2xl font-semibold text-white">Passing Touchdowns Progress</h2>
-                            <p class="text-sm text-gray-400">Goal: 30 Touchdowns</p>
-                        </div>
-                         <div class="text-right">
-                            <span id="tdPercentage" class="text-2xl font-bold text-green-400">0%</span>
-                        </div>
-                    </div>
-                    <div class="mb-4">
-                        <div class="w-full progress-bar-bg rounded-full h-4">
-                            <div id="tdProgressBar" class="progress-bar-fill h-4 rounded-full" style="width: 0%;"></div>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
-                        <div>
-                            <p class="text-sm text-gray-400">Current</p>
-                            <p id="currentTDsText" class="text-3xl font-bold stat-value">0</p>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-400">TDs Remaining</p>
-                            <p id="tdsRemaining" class="text-3xl font-bold text-white">30</p>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-400">Needed Per Game</p>
-                            <p id="tdsPerGame" class="text-3xl font-bold text-white">1.8</p>
-                        </div>
-                    </div>
-                     <div class="mt-6 h-64 sm:h-80">
-                        <canvas id="tdsChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Weekly Highlights - Full Width -->
-            <div class="md:col-span-2 lg:col-span-3 card rounded-lg p-6 shadow-lg">
-                <h2 class="text-2xl font-semibold mb-4 text-white">Weekly Highlights</h2>
-                <div id="weeklyHighlights" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <!-- Game week cards will be injected here -->
-                </div>
-            </div>
-        </main>
+        <footer>
+            <p>Stats as of Week 6, 2025 Season • Record: 5-0 🔥</p>
+            <p>Data from ESPN and Official Bears Sources</p>
+        </footer>
     </div>
 
     <script>
-        // --- CONFIG & STATE ---
-        const YARDS_GOAL = 4000;
-        const TDS_GOAL = 30;
-        let seasonLength = 17;
-        let yardsChart, tdsChart;
+        let currentSchedule = 17;
+        const gamesPlayed = 5;
+        const currentYards = 1179;
+        const currentTDs = 9;
+        const yardGoal = 4000;
+        const tdGoal = 30;
 
-        const gameSchedule = [
-            { week: 1, title: 'Week 1 vs MIN', opponent: 'Minnesota Vikings', link: 'https://www.youtube.com/watch?v=POhj9Y89tt0' },
-            { week: 2, title: 'Week 2 at DET', opponent: 'Detroit Lions', link: 'https://www.youtube.com/watch?v=DmA08lBOa68' },
-            { week: 3, title: 'Week 3 vs DAL', opponent: 'Dallas Cowboys', link: 'https://www.youtube.com/watch?v=SAN1qBEhW8o&t' },
-            { week: 4, title: 'Week 4 at LV', opponent: 'Las Vegas Raiders', link: 'https://www.youtube.com/watch?v=GBX1Hl-CcGU&t' },
-            { week: 5, title: 'Week 5 - BYE', opponent: 'BYE WEEK', link: '#' },
-            { week: 6, title: 'Week 6 at WAS', opponent: 'Washington Commanders', link: '#' },
-            { week: 7, title: 'Week 7 vs NO', opponent: 'New Orleans Saints', link: '#' },
-            { week: 8, title: 'Week 8 at BAL', opponent: 'Baltimore Ravens', link: '#' },
-            { week: 9, title: 'Week 9 at CIN', opponent: 'Cincinnati Bengals', link: '#' },
-            { week: 10, title: 'Week 10 vs NYG', opponent: 'New York Giants', link: '#' },
-            { week: 11, title: 'Week 11 at MIN', opponent: 'Minnesota Vikings', link: '#' },
-            { week: 12, title: 'Week 12 vs PIT', opponent: 'Pittsburgh Steelers', link: '#' },
-            { week: 13, title: 'Week 13 at PHI', opponent: 'Philadelphia Eagles', link: '#' },
-            { week: 14, title: 'Week 14 at GB', opponent: 'Green Bay Packers', link: 'https://www.youtube.com/watch?v=DmA08lBOa68' },
-            { week: 15, title: 'Week 15 vs CLE', opponent: 'Cleveland Browns', link: '#' },
-            { week: 16, title: 'Week 16 vs GB', opponent: 'Green Bay Packers', link: 'https://www.youtube.com/watch?v=DmA08lBOa68' },
-            { week: 17, title: 'Week 17 at SF', opponent: 'San Francisco 49ers', link: '#' },
-            { week: 18, title: 'Week 18 vs DET', opponent: 'Detroit Lions', link: '#' },
-        ];
-        
-        // --- DOM ELEMENTS ---
-        const gamesPlayedInput = document.getElementById('gamesPlayed');
-        const currentYardsInput = document.getElementById('currentYards');
-        const currentTDsInput = document.getElementById('currentTDs');
-        const updateButton = document.getElementById('updateButton');
-        const seasonToggle = document.getElementById('seasonToggle');
-
-        // --- GEMINI API ELEMENTS ---
-        const generateGameplanBtn = document.getElementById('generateGameplan');
-        const generateReportBtn = document.getElementById('generateReport');
-        const analyzePastGameBtn = document.getElementById('analyzePastGame');
-        const generateHotTakeBtn = document.getElementById('generateHotTake');
-        const aiResponseContainer = document.getElementById('aiResponseContainer');
-        const aiResponseTitle = document.getElementById('aiResponseTitle');
-        const aiResponseEl = document.getElementById('aiResponse');
-        const loadingEl = document.getElementById('loading');
-        
-        // --- UTILITY FUNCTIONS ---
-        const formatNumber = (num) => new Intl.NumberFormat('en-US').format(num);
-
-        // --- GEMINI API CALL ---
-        async function callGemini(prompt, systemPrompt = "") {
-            loadingEl.style.display = 'flex';
-            aiResponseContainer.style.display = 'none';
-            try {
-                const apiKey = "";
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-                
-                const payload = {
-                    contents: [{ parts: [{ text: prompt }] }],
-                    tools: [{ "google_search": {} }],
-                };
-
-                if (systemPrompt) {
-                     payload.systemInstruction = { parts: [{ text: systemPrompt }] };
-                }
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (!response.ok) {
-                    throw new Error(`API call failed with status: ${response.status}`);
-                }
-
-                const result = await response.json();
-                return result.candidates?.[0]?.content?.parts?.[0]?.text || "No response generated.";
-            } catch (error) {
-                console.error("Gemini API call error:", error);
-                return `Error: Could not retrieve analysis. ${error.message}`;
-            } finally {
-                loadingEl.style.display = 'none';
-            }
-        }
-
-        // --- CHARTING ---
-        function createOrUpdateChart(chartInstance, canvasId, labels, data, colors, goal) {
-            if (chartInstance) {
-                chartInstance.destroy();
-            }
+        function setSchedule(games) {
+            currentSchedule = games;
             
-            const ctx = document.getElementById(canvasId).getContext('2d');
-            
-            const chartData = {
-                labels: labels,
-                datasets: [{
-                    label: 'Stats',
-                    data: data,
-                    backgroundColor: colors,
-                    borderColor: colors.map(color => color.replace('0.6', '1')),
-                    borderWidth: 1,
-                }]
-            };
-
-            const chartOptions = {
-                indexAxis: 'y',
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        beginAtZero: true,
-                        max: goal * 1.2, // Give some headroom
-                        ticks: { color: '#9CA3AF' },
-                        grid: { color: '#374151' }
-                    },
-                    y: {
-                        ticks: { color: '#9CA3AF' },
-                        grid: { color: '#374151' }
-                    }
-                },
-                plugins: {
-                    legend: { display: false },
-                     datalabels: {
-                        anchor: 'end',
-                        align: 'end',
-                        color: '#67e8f9', // Chicago Blue
-                        font: {
-                            weight: 'bold',
-                            size: 12,
-                        },
-                        formatter: (value) => formatNumber(Math.round(value)),
-                    }
-                }
-            };
-
-            return new Chart(ctx, {
-                type: 'bar',
-                data: chartData,
-                options: chartOptions,
-                plugins: [ChartDataLabels]
+            // Update button states
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.remove('active');
             });
+            event.target.classList.add('active');
+            
+            // Calculate remaining games
+            const gamesRemaining = games - gamesPlayed;
+            document.getElementById('gamesRemaining').textContent = gamesRemaining;
+            
+            // Calculate yards needed per game
+            const yardsNeeded = yardGoal - currentYards;
+            const yardsPerGame = (yardsNeeded / gamesRemaining).toFixed(1);
+            document.getElementById('yardsPerGame').textContent = yardsPerGame;
+            
+            // Calculate TDs needed per game
+            const tdsNeeded = tdGoal - currentTDs;
+            const tdsPerGame = (tdsNeeded / gamesRemaining).toFixed(2);
+            document.getElementById('tdsPerGame').textContent = tdsPerGame;
+            
+            // Calculate current pace
+            const yardsPace = Math.round((currentYards / gamesPlayed) * games);
+            const tdsPace = ((currentTDs / gamesPlayed) * games).toFixed(1);
+            
+            document.getElementById('yardsPace').textContent = yardsPace;
+            document.getElementById('tdsPace').textContent = tdsPace;
+            
+            // Update colors based on pace
+            const yardsPaceEl = document.getElementById('yardsPace');
+            yardsPaceEl.className = yardsPace >= yardGoal ? 'good' : 'warning';
+            
+            const tdsPaceEl = document.getElementById('tdsPace');
+            tdsPaceEl.className = parseFloat(tdsPace) >= tdGoal ? 'good' : 'warning';
         }
 
-        // --- UI UPDATE & CALCULATIONS ---
-        function updateDashboard() {
-            const gamesPlayed = parseInt(gamesPlayedInput.value) || 0;
-            const currentYards = parseInt(currentYardsInput.value) || 0;
-            const currentTDs = parseInt(currentTDsInput.value) || 0;
-
-            const gamesRemaining = Math.max(0, seasonLength - gamesPlayed);
+        // Initialize with 17 games
+        window.onload = function() {
+            const gamesRemaining = currentSchedule - gamesPlayed;
+            document.getElementById('gamesRemaining').textContent = gamesRemaining;
             
-            // --- Yards Calculations ---
-            const yardsRemaining = Math.max(0, YARDS_GOAL - currentYards);
-            const yardsPerGameNeeded = gamesRemaining > 0 ? (yardsRemaining / gamesRemaining) : 0;
-            const projectedYards = gamesPlayed > 0 ? (currentYards / gamesPlayed) * seasonLength : 0;
-            const yardsPercentage = (currentYards / YARDS_GOAL) * 100;
-
-            // --- TDs Calculations ---
-            const tdsRemaining = Math.max(0, TDS_GOAL - currentTDs);
-            const tdsPerGameNeeded = gamesRemaining > 0 ? (tdsRemaining / gamesRemaining) : 0;
-            const projectedTDs = gamesPlayed > 0 ? (currentTDs / gamesPlayed) * seasonLength : 0;
-            const tdPercentage = (currentTDs / TDS_GOAL) * 100;
-
-            // --- Update UI Text & Progress Bars ---
-            document.getElementById('currentYardsText').textContent = formatNumber(currentYards);
-            document.getElementById('yardsRemaining').textContent = formatNumber(yardsRemaining);
-            document.getElementById('yardsPerGame').textContent = yardsPerGameNeeded.toFixed(1);
-            document.getElementById('yardsPercentage').textContent = `${yardsPercentage.toFixed(1)}%`;
-            document.getElementById('yardsProgressBar').style.width = `${Math.min(100, yardsPercentage)}%`;
+            const yardsNeeded = yardGoal - currentYards;
+            const yardsPerGame = (yardsNeeded / gamesRemaining).toFixed(1);
+            document.getElementById('yardsPerGame').textContent = yardsPerGame;
             
-            document.getElementById('currentTDsText').textContent = currentTDs;
-            document.getElementById('tdsRemaining').textContent = tdsRemaining;
-            document.getElementById('tdsPerGame').textContent = tdsPerGameNeeded.toFixed(1);
-            document.getElementById('tdPercentage').textContent = `${tdPercentage.toFixed(1)}%`;
-            document.getElementById('tdProgressBar').style.width = `${Math.min(100, tdPercentage)}%`;
-
-            document.getElementById('yardGoalText').textContent = formatNumber(YARDS_GOAL);
-
-            // --- Update Charts ---
-            yardsChart = createOrUpdateChart(
-                yardsChart, 
-                'yardsChart',
-                ['Current', 'Goal', 'Projected'], 
-                [currentYards, YARDS_GOAL, projectedYards],
-                ['rgba(0, 20, 40, 0.7)', 'rgba(200, 56, 3, 0.7)', 'rgba(0, 20, 40, 0.7)'],
-                YARDS_GOAL
-            );
-
-            tdsChart = createOrUpdateChart(
-                tdsChart,
-                'tdsChart',
-                ['Current', 'Goal', 'Projected'], 
-                [currentTDs, TDS_GOAL, projectedTDs],
-                ['rgba(255, 107, 0, 0.7)', 'rgba(0, 83, 155, 0.7)', 'rgba(255, 107, 0, 0.7)'],
-                TDS_GOAL
-            );
-
-            // Enable/disable mid-season report
-            generateReportBtn.disabled = gamesPlayed < 8;
+            const tdsNeeded = tdGoal - currentTDs;
+            const tdsPerGame = (tdsNeeded / gamesRemaining).toFixed(2);
+            document.getElementById('tdsPerGame').textContent = tdsPerGame;
             
-            renderSchedule();
+            const yardsPace = Math.round((currentYards / gamesPlayed) * currentSchedule);
+            const tdsPace = ((currentTDs / gamesPlayed) * currentSchedule).toFixed(1);
+            
+            document.getElementById('yardsPace').textContent = yardsPace;
+            document.getElementById('tdsPace').textContent = tdsPace;
         }
-
-        function renderSchedule() {
-            const scheduleContainer = document.getElementById('weeklyHighlights');
-            const gamesPlayed = parseInt(gamesPlayedInput.value) || 0;
-            scheduleContainer.innerHTML = ''; // Clear existing schedule
-
-            gameSchedule.forEach(game => {
-                const card = document.createElement('div');
-                card.className = 'bg-gray-800 p-3 rounded-lg flex flex-col justify-between';
-                
-                const status = game.week === 5 ? '' : (game.week <= gamesPlayed ? '' : '<span class="text-xs text-gray-400">Upcoming</span>');
-                
-                let linksHTML = '';
-                if (game.week <= gamesPlayed && game.week !== 5) { // Week 5 is BYE
-                     linksHTML = `<a href="${game.link}" target="_blank" rel="noopener noreferrer" class="text-xs text-yellow-400 hover:text-yellow-300 transition-colors">View Highlights »</a>`;
-                }
-
-                card.innerHTML = `
-                    <div>
-                        <h3 class="font-semibold text-white">${game.title}</h3>
-                        <p class="text-sm text-gray-300">${game.opponent}</p>
-                    </div>
-                    <div class="mt-2 text-right">
-                        ${status || linksHTML}
-                    </div>
-                `;
-                scheduleContainer.appendChild(card);
-            });
-        }
-        
-
-        // --- EVENT LISTENERS ---
-        updateButton.addEventListener('click', updateDashboard);
-        
-        seasonToggle.addEventListener('change', () => {
-            seasonLength = seasonToggle.checked ? 17 : 16;
-            document.querySelector('.toggle-dot').classList.toggle('bg-yellow-200');
-            updateDashboard();
-        });
-
-        generateGameplanBtn.addEventListener('click', async () => {
-            const gamesPlayed = parseInt(gamesPlayedInput.value);
-            if (gamesPlayed >= 18) {
-                aiResponseTitle.innerText = "Season Over";
-                aiResponseEl.innerText = "The regular season has concluded.";
-                aiResponseContainer.style.display = 'block';
-                return;
-            }
-            const nextGameIndex = gameSchedule.findIndex(g => g.week > gamesPlayed && g.week !== 5);
-            const nextGame = gameSchedule[nextGameIndex];
-            const systemPrompt = `You are a world-class NFL offensive coordinator. Provide a concise, single-paragraph gameplan for your quarterback, Caleb Williams. Focus on exploiting the upcoming opponent's weaknesses.`;
-            const prompt = `Generate a gameplan for Caleb Williams for the upcoming game in Week ${nextGame.week} against the ${nextGame.opponent}. His current stats are: ${currentYardsInput.value} passing yards and ${currentTDsInput.value} TDs through ${gamesPlayed} games.`;
-            const response = await callGemini(prompt, systemPrompt);
-            aiResponseTitle.innerText = `Gameplan: Week ${nextGame.week} vs ${nextGame.opponent}`;
-            aiResponseEl.innerText = response;
-            aiResponseContainer.style.display = 'block';
-        });
-
-        generateReportBtn.addEventListener('click', async () => {
-            const systemPrompt = "You are a lead NFL analyst for ESPN. Provide a concise, well-structured mid-season report for Caleb Williams. Analyze his performance, progress towards his goals, and areas for improvement.";
-            const prompt = `Generate a mid-season report for Caleb Williams. He has played ${gamesPlayedInput.value} games in a ${seasonLength}-game season. His current stats are ${currentYardsInput.value} passing yards and ${currentTDsInput.value} passing touchdowns. His goals are ${YARDS_GOAL} yards and ${TDS_GOAL} TDs.`;
-            const response = await callGemini(prompt, systemPrompt);
-            aiResponseTitle.innerText = `Mid-Season Report`;
-            aiResponseEl.innerText = response;
-            aiResponseContainer.style.display = 'block';
-        });
-        
-        analyzePastGameBtn.addEventListener('click', async () => {
-            const gamesPlayed = parseInt(gamesPlayedInput.value) || 0;
-            const pastGames = gameSchedule.filter(g => g.week <= gamesPlayed && g.week !== 5);
-            
-            if (pastGames.length === 0) {
-                 alert("No past games to analyze yet.");
-                 return;
-            }
-
-            const weekToAnalyze = prompt(`Which week would you like to analyze? (1-${gamesPlayed})`);
-            const weekNum = parseInt(weekToAnalyze);
-
-            if (!weekNum || weekNum < 1 || weekNum > gamesPlayed) {
-                alert("Invalid week selected.");
-                return;
-            }
-
-            const game = gameSchedule.find(g => g.week === weekNum);
-            if (!game) {
-                 alert("Game not found for that week.");
-                 return;
-            }
-
-            const systemPrompt = "You are a sharp, insightful NFL analyst. Provide a short, one-paragraph summary of Caleb Williams' performance in the specified game based on the opponent and context provided. Use Google Search to find relevant stats or news from that game if possible.";
-            const prompt = `Provide a post-game analysis for Caleb Williams' performance in Week ${weekNum} against the ${game.opponent}.`;
-            
-            const response = await callGemini(prompt, systemPrompt);
-            aiResponseTitle.innerText = `Analysis: Week ${weekNum} vs ${game.opponent}`;
-            aiResponseEl.innerText = response;
-            aiResponseContainer.style.display = 'block';
-        });
-
-        generateHotTakeBtn.addEventListener('click', async () => {
-            const systemPrompt = "You are a fiery, opinionated sports radio host known for your bold, controversial takes. Do not be boring. Create a 'hot take' about Caleb Williams.";
-            const prompt = `Generate a 'hot take' about Caleb Williams' season so far. He has ${currentYardsInput.value} yards and ${currentTDsInput.value} TDs in ${gamesPlayedInput.value} games. Be provocative.`;
-            
-            const response = await callGemini(prompt, systemPrompt);
-            aiResponseTitle.innerText = `🔥 Hot Take! 🔥`;
-            aiResponseEl.innerText = response;
-            aiResponseContainer.style.display = 'block';
-        });
-
-
-        // --- INITIALIZATION ---
-        document.addEventListener('DOMContentLoaded', () => {
-            seasonToggle.checked = true; // Default to 17 games
-            updateDashboard();
-        });
     </script>
-
 </body>
 </html>
-
-

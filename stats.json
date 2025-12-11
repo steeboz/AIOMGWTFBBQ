@@ -1,0 +1,122 @@
+{
+  "stats": {
+    "games_played": 13,
+    "passing_yards": 2908,
+    "passing_tds": 19
+  },
+  "games": [
+    {
+      "week": 1,
+      "date": "2025-09-08",
+      "opponent": "MIN",
+      "result": "L, 24-27",
+      "played": true,
+      "highlights_url": "https://www.youtube.com/results?search_query=Caleb+Williams+highlights+vs+MIN+2025-09-08+2025"
+    },
+    {
+      "week": 2,
+      "date": "2025-09-14",
+      "opponent": "@ DET",
+      "result": "L, 21-52",
+      "played": true,
+      "highlights_url": "https://www.youtube.com/results?search_query=Caleb+Williams+highlights+vs+DET+2025-09-14+2025"
+    },
+    {
+      "week": 3,
+      "date": "2025-09-21",
+      "opponent": "DAL",
+      "result": "W, 31-14",
+      "played": true,
+      "highlights_url": "https://www.youtube.com/results?search_query=Caleb+Williams+highlights+vs+DAL+2025-09-21+2025"
+    },
+    {
+      "week": 4,
+      "date": "2025-09-28",
+      "opponent": "@ LVR",
+      "result": "W, 25-24",
+      "played": true,
+      "highlights_url": "https://www.youtube.com/results?search_query=Caleb+Williams+highlights+vs+LVR+2025-09-28+2025"
+    },
+    {
+      "week": 5,
+      "date": "BYE",
+      "opponent": "BYE",
+      "result": "",
+      "played": false,
+      "highlights_url": null
+    },
+    {
+      "week": 6,
+      "date": "2025-10-13",
+      "opponent": "@ WAS",
+      "result": "W, 25-24",
+      "played": true,
+      "highlights_url": "https://www.youtube.com/results?search_query=Caleb+Williams+highlights+vs+WAS+2025-10-13+2025"
+    },
+    {
+      "week": 7,
+      "date": "2025-10-19",
+      "opponent": "NOR",
+      "result": "W, 26-14",
+      "played": true,
+      "highlights_url": "https://www.youtube.com/results?search_query=Caleb+Williams+highlights+vs+NOR+2025-10-19+2025"
+    },
+    {
+      "week": 8,
+      "date": "2025-10-26",
+      "opponent": "@ BAL",
+      "result": "L, 16-30",
+      "played": true,
+      "highlights_url": "https://www.youtube.com/results?search_query=Caleb+Williams+highlights+vs+BAL+2025-10-26+2025"
+    },
+    {
+      "week": 9,
+      "date": "2025-11-02",
+      "opponent": "@ CIN",
+      "result": "W, 47-42",
+      "played": true,
+      "highlights_url": "https://www.youtube.com/results?search_query=Caleb+Williams+highlights+vs+CIN+2025-11-02+2025"
+    },
+    {
+      "week": 10,
+      "date": "2025-11-09",
+      "opponent": "NYG",
+      "result": "W, 24-20",
+      "played": true,
+      "highlights_url": "https://www.youtube.com/results?search_query=Caleb+Williams+highlights+vs+NYG+2025-11-09+2025"
+    },
+    {
+      "week": 11,
+      "date": "2025-11-16",
+      "opponent": "@ MIN",
+      "result": "W, 19-17",
+      "played": true,
+      "highlights_url": "https://www.youtube.com/results?search_query=Caleb+Williams+highlights+vs+MIN+2025-11-16+2025"
+    },
+    {
+      "week": 12,
+      "date": "2025-11-23",
+      "opponent": "PIT",
+      "result": "W, 31-28",
+      "played": true,
+      "highlights_url": "https://www.youtube.com/results?search_query=Caleb+Williams+highlights+vs+PIT+2025-11-23+2025"
+    },
+    {
+      "week": 13,
+      "date": "2025-11-28",
+      "opponent": "@ PHI",
+      "result": "W, 24-15",
+      "played": true,
+      "highlights_url": "https://www.youtube.com/results?search_query=Caleb+Williams+highlights+vs+PHI+2025-11-28+2025"
+    },
+    {
+      "week": 14,
+      "date": "2025-12-07",
+      "opponent": "@ GNB",
+      "result": "L, 21-28",
+      "played": true,
+      "highlights_url": "https://www.youtube.com/results?search_query=Caleb+Williams+highlights+vs+GNB+2025-12-07+2025"
+    }
+  ],
+  "updated_at": "2025-12-11T16:27:15.459048"
+}

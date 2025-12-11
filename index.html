@@ -527,11 +527,11 @@
         <div class="stats-grid">
             <div class="stat-card">
                 <p>Games Played</p>
-                <h2>5</h2>
+                <h2 id="gamesPlayed">0</h2>
             </div>
             <div class="stat-card">
                 <p>Games Remaining</p>
-                <h2 class="highlight" id="gamesRemaining">12</h2>
+                <h2 class="highlight" id="gamesRemaining">0</h2>
             </div>
         </div>
 
@@ -543,27 +543,27 @@
                     <p class="goal-subtitle">Goal: 4,000 yards</p>
                 </div>
                 <div class="current-stat">
-                    <h3>1,351</h3>
+                    <h3 id="currentYards">0</h3>
                     <p>current</p>
                 </div>
             </div>
             <div class="progress-bar">
-                <div class="progress-fill" style="width: 29.5%">
-                    <span>29.5%</span>
+                <div class="progress-fill" id="yardsProgressBar" style="width: 0%">
+                    <span id="yardsProgressPercent">0%</span>
                 </div>
             </div>
             <div class="goal-stats">
                 <div class="goal-stat-box">
                     <p>Yards Needed</p>
-                    <h3>2,821</h3>
+                    <h3 id="yardsNeeded">0</h3>
                 </div>
                 <div class="goal-stat-box">
                     <p>Per Game Needed</p>
-                    <h3 class="needed" id="yardsPerGame">235.1</h3>
+                    <h3 class="needed" id="yardsPerGame">0</h3>
                 </div>
                 <div class="goal-stat-box">
                     <p>Current Pace</p>
-                    <h3 class="good" id="yardsPace">4,006</h3>
+                    <h3 class="good" id="yardsPace">0</h3>
                 </div>
             </div>
         </div>
@@ -576,27 +576,27 @@
                     <p class="goal-subtitle">Goal: 30 TDs</p>
                 </div>
                 <div class="current-stat">
-                    <h3>9</h3>
+                    <h3 id="currentTDs">0</h3>
                     <p>current</p>
                 </div>
             </div>
             <div class="progress-bar">
-                <div class="progress-fill" style="width: 30%">
-                    <span>30.0%</span>
+                <div class="progress-fill" id="tdsProgressBar" style="width: 0%">
+                    <span id="tdsProgressPercent">0.0%</span>
                 </div>
             </div>
             <div class="goal-stats">
                 <div class="goal-stat-box">
                     <p>TDs Needed</p>
-                    <h3>21</h3>
+                    <h3 id="tdsNeeded">0</h3>
                 </div>
                 <div class="goal-stat-box">
                     <p>Per Game Needed</p>
-                    <h3 class="needed" id="tdsPerGame">1.75</h3>
+                    <h3 class="needed" id="tdsPerGame">0</h3>
                 </div>
                 <div class="goal-stat-box">
                     <p>Current Pace</p>
-                    <h3 class="good" id="tdsPace">30.6</h3>
+                    <h3 class="good" id="tdsPace">0</h3>
                 </div>
             </div>
         </div>
@@ -604,358 +604,222 @@
         <!-- Schedule Section -->
         <div class="schedule-section">
             <h2>📅 2025 Season Schedule</h2>
-            <div class="schedule-grid">
-                <!-- Week 1 -->
-                <div class="game-card played">
-                    <div class="week-label">Week 1</div>
-                    <div class="game-info">
-                        <h3>vs Minnesota Vikings</h3>
-                        <p>W 25-17</p>
-                    </div>
-                    <div class="game-time">
-                        <p>Monday, 8:15 PM</p>
-                        <span>Sept 8</span>
-                    </div>
-                    <div class="game-link">
-                        <a href="https://www.youtube.com/watch?v=ccKfthnzIDI" target="_blank">Highlights</a>
-                    </div>
-                </div>
-
-                <!-- Week 2 -->
-                <div class="game-card played">
-                    <div class="week-label">Week 2</div>
-                    <div class="game-info">
-                        <h3>@ Detroit Lions</h3>
-                        <p>W 27-24</p>
-                    </div>
-                    <div class="game-time">
-                        <p>Sunday, 12:00 PM</p>
-                        <span>Sept 14</span>
-                    </div>
-                    <div class="game-link">
-                        <a href="https://www.youtube.com/watch?v=fnEUGYicUpI" target="_blank">Highlights</a>
-                    </div>
-                </div>
-
-                <!-- Week 3 -->
-                <div class="game-card played">
-                    <div class="week-label">Week 3</div>
-                    <div class="game-info">
-                        <h3>vs Indianapolis Colts</h3>
-                        <p>W 28-20</p>
-                    </div>
-                    <div class="game-time">
-                        <p>Sunday, 12:00 PM</p>
-                        <span>Sept 22</span>
-                    </div>
-                    <div class="game-link">
-                        <a href="https://www.youtube.com/watch?v=SAN1qBEhW8o&t" target="_blank">Highlights</a>
-                    </div>
-                </div>
-
-                <!-- Week 4 -->
-                <div class="game-card played">
-                    <div class="week-label">Week 4</div>
-                    <div class="game-info">
-                        <h3>@ Las Vegas Raiders</h3>
-                        <p>W 23-20</p>
-                    </div>
-                    <div class="game-time">
-                        <p>Sunday, 3:25 PM</p>
-                        <span>Sept 29</span>
-                    </div>
-                    <div class="game-link">
-                        <a href="https://www.youtube.com/watch?v=GBX1Hl-CcGU&t" target="_blank">Highlights</a>
-                    </div>
-                </div>
-
-                <!-- Week 5 - BYE -->
-                <div class="game-card bye-week">
-                    <h3>🏖️ BYE WEEK 🏖️</h3>
-                </div>
-
-                <!-- Week 6 -->
-                <div class="game-card played">
-                    <div class="week-label">Week 6</div>
-                    <div class="game-info">
-                        <h3>@ Washington Commanders</h3>
-                        <p>W 25-24</p>
-                    </div>
-                    <div class="game-time">
-                        <p>Monday, 8:15 PM</p>
-                        <span>Oct 14</span>
-                    </div>
-                    <div class="game-link">
-                        <a href="https://www.youtube.com/watch?v=IzjvQG8HtWc" target="_blank">Highlights</a>
-                    </div>
-                </div>
-
-                <!-- Week 7 -->
-                <div class="game-card played">
-                    <div class="week-label">Week 7</div>
-                    <div class="game-info">
-                        <h3>vs New Orleans Saints</h3>
-                        <p>W 26-14</p>
-                    </div>
-                    <div class="game-time">
-                        <p>Sunday, 12:00 PM</p>
-                        <span>Oct 20</span>
-                    </div>
-                    <div class="game-link">
-                       <a href="https://www.youtube.com/watch?v=IA857Yj2O20" target="_blank">Highlights</a>
-                    </div>
-                </div>
-
-                <!-- Week 8 -->
-                <div class="game-card upcoming">
-                    <div class="week-label">Week 8</div>
-                    <div class="game-info">
-                        <h3>@ Baltimore Ravens</h3>
-                        <p>M&T Bank Stadium</p>
-                    </div>
-                    <div class="game-time">
-                        <p>Sunday, 12:00 PM</p>
-                        <span>Oct 27</span>
-                    </div>
-                    <div class="game-link">
-                        <a href="https://www.espn.com/nfl/game/_/gameId/401671753" target="_blank" class="preview">Preview</a>
-                    </div>
-                </div>
-
-                <!-- Week 9 -->
-                <div class="game-card upcoming">
-                    <div class="week-label">Week 9</div>
-                    <div class="game-info">
-                        <h3>@ Cincinnati Bengals</h3>
-                        <p>Paycor Stadium</p>
-                    </div>
-                    <div class="game-time">
-                        <p>Sunday, 12:00 PM</p>
-                        <span>Nov 2</span>
-                    </div>
-                    <div class="game-link">
-                        <a href="https://www.espn.com/nfl/matchup?gameId=401671760" target="_blank" class="preview">Preview</a>
-                    </div>
-                </div>
-
-                <!-- Week 10 -->
-                <div class="game-card upcoming">
-                    <div class="week-label">Week 10</div>
-                    <div class="game-info">
-                        <h3>vs Dallas Cowboys</h3>
-                        <p>Soldier Field</p>
-                    </div>
-                    <div class="game-time">
-                        <p>Sunday, 3:25 PM</p>
-                        <span>Nov 9</span>
-                    </div>
-                    <div class="game-link">
-                        <a href="https://www.espn.com/nfl/matchup?gameId=401671766" target="_blank" class="preview">Preview</a>
-                    </div>
-                </div>
-
-                <!-- Week 11 -->
-                <div class="game-card upcoming">
-                    <div class="week-label">Week 11</div>
-                    <div class="game-info">
-                        <h3>vs Green Bay Packers</h3>
-                        <p>Soldier Field</p>
-                    </div>
-                    <div class="game-time">
-                        <p>Sunday, 12:00 PM</p>
-                        <span>Nov 16</span>
-                    </div>
-                    <div class="game-link">
-                        <a href="https://www.youtube.com/watch?v=DmA08lBOa68" target="_blank" class="preview">FTP</a>
-                    </div>
-                </div>
-
-                <!-- Week 12 -->
-                <div class="game-card upcoming">
-                    <div class="week-label">Week 12</div>
-                    <div class="game-info">
-                        <h3>@ Minnesota Vikings</h3>
-                        <p>U.S. Bank Stadium</p>
-                    </div>
-                    <div class="game-time">
-                        <p>Sunday, 12:00 PM</p>
-                        <span>Nov 23</span>
-                    </div>
-                    <div class="game-link">
-                        <a href="https://www.espn.com/nfl/matchup?gameId=401671780" target="_blank" class="preview">Preview</a>
-                    </div>
-                </div>
-
-                <!-- Week 13 -->
-                <div class="game-card upcoming">
-                    <div class="week-label">Week 13</div>
-                    <div class="game-info">
-                        <h3>@ Philadelphia Eagles</h3>
-                        <p>Lincoln Financial Field</p>
-                    </div>
-                    <div class="game-time">
-                        <p>Friday, 2:30 PM</p>
-                        <span>Nov 28 (Black Friday)</span>
-                    </div>
-                    <div class="game-link">
-                        <a href="https://www.espn.com/nfl/matchup?gameId=401671787" target="_blank" class="preview">Preview</a>
-                    </div>
-                </div>
-
-                <!-- Week 14 -->
-                <div class="game-card upcoming">
-                    <div class="week-label">Week 14</div>
-                    <div class="game-info">
-                        <h3>@ Cleveland Browns</h3>
-                        <p>Cleveland Browns Stadium</p>
-                    </div>
-                    <div class="game-time">
-                        <p>Sunday, 12:00 PM</p>
-                        <span>Dec 7</span>
-                    </div>
-                    <div class="game-link">
-                        <a href="https://www.espn.com/nfl/matchup?gameId=401671792" target="_blank" class="preview">Preview</a>
-                    </div>
-                </div>
-
-                <!-- Week 15 -->
-                <div class="game-card upcoming">
-                    <div class="week-label">Week 15</div>
-                    <div class="game-info">
-                        <h3>vs Pittsburgh Steelers</h3>
-                        <p>Soldier Field</p>
-                    </div>
-                    <div class="game-time">
-                        <p>Sunday, 12:00 PM</p>
-                        <span>Dec 14</span>
-                    </div>
-                    <div class="game-link">
-                        <a href="https://www.espn.com/nfl/matchup?gameId=401671799" target="_blank" class="preview">Preview</a>
-                    </div>
-                </div>
-
-                <!-- Week 16 -->
-                <div class="game-card upcoming">
-                    <div class="week-label">Week 16</div>
-                    <div class="game-info">
-                        <h3>vs Green Bay Packers</h3>
-                        <p>Soldier Field</p>
-                    </div>
-                    <div class="game-time">
-                        <p>Saturday, TBD</p>
-                        <span>Dec 20</span>
-                    </div>
-                    <div class="game-link">
-                        <a href="https://www.youtube.com/watch?v=DmA08lBOa68" target="_blank" class="preview">FTP</a>
-                    </div>
-                </div>
-
-                <!-- Week 17 -->
-                <div class="game-card upcoming">
-                    <div class="week-label">Week 17</div>
-                    <div class="game-info">
-                        <h3>@ San Francisco 49ers</h3>
-                        <p>Levi's Stadium</p>
-                    </div>
-                    <div class="game-time">
-                        <p>Sunday, 7:20 PM</p>
-                        <span>Dec 28 (SNF)</span>
-                    </div>
-                    <div class="game-link">
-                        <a href="https://www.espn.com/nfl/matchup?gameId=401671812" target="_blank" class="preview">Preview</a>
-                    </div>
-                </div>
-
-                <!-- Week 18 -->
-                <div class="game-card upcoming">
-                    <div class="week-label">Week 18</div>
-                    <div class="game-info">
-                        <h3>vs Detroit Lions</h3>
-                        <p>Soldier Field</p>
-                    </div>
-                    <div class="game-time">
-                        <p>TBD</p>
-                        <span>Jan 3/4</span>
-                    </div>
-                    <div class="game-link">
-                        <a href="https://www.espn.com/nfl/matchup?gameId=401671820" target="_blank" class="preview">Preview</a>
-                    </div>
-                </div>
+            <div class="schedule-grid" id="scheduleGrid">
+                <!-- Dynamically Populated -->
             </div>
         </div>
 
         <footer>
-            <p>Stats as of Week 6, 2025 Season • Record: 5-0 🔥</p>
-            <p>Data from ESPN and Official Bears Sources</p>
+            <p id="footerStats">Stats as of Week ?, 2025 Season</p>
+            <p>Data from Pro-Football-Reference.com (Scraped)</p>
         </footer>
     </div>
 
     <script>
         let currentSchedule = 17;
-        const gamesPlayed = 5;
-        const currentYards = 1179;
-        const currentTDs = 9;
         const yardGoal = 4000;
         const tdGoal = 30;
 
+        // Default Stats (Will be overwritten by JSON fetch)
+        let gamesPlayed = 0;
+        let currentYards = 0;
+        let currentTDs = 0;
+
+        async function fetchStats() {
+            try {
+                const response = await fetch('stats.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+
+                // Update Global Variables
+                gamesPlayed = data.stats.games_played;
+                currentYards = data.stats.passing_yards;
+                currentTDs = data.stats.passing_tds;
+
+                // Update UI
+                updateUI();
+                renderSchedule(data.games);
+
+                // Update Footer
+                document.getElementById('footerStats').textContent = `Stats as of ${new Date(data.updated_at).toLocaleDateString()} • Record: ${calculateRecord(data.games)}`;
+
+            } catch (error) {
+                console.error('Error fetching stats:', error);
+                document.getElementById('scheduleGrid').innerHTML = '<p style="text-align:center; color:white;">Error loading schedule data.</p>';
+            }
+        }
+
+        function calculateRecord(games) {
+            let wins = 0;
+            let losses = 0;
+            let ties = 0;
+            games.forEach(game => {
+                if (game.result && game.result.includes('W')) wins++;
+                if (game.result && game.result.includes('L')) losses++;
+                if (game.result && game.result.includes('T')) ties++;
+            });
+            if (ties > 0) return `${wins}-${losses}-${ties} 🔥`;
+            return `${wins}-${losses} 🔥`;
+        }
+
+        function updateUI() {
+            document.getElementById('gamesPlayed').textContent = gamesPlayed;
+
+            // Calculate remaining games
+            const gamesRemaining = Math.max(0, currentSchedule - gamesPlayed);
+            document.getElementById('gamesRemaining').textContent = gamesRemaining;
+
+            // Update Current Stats
+            document.getElementById('currentYards').textContent = currentYards.toLocaleString();
+            document.getElementById('currentTDs').textContent = currentTDs;
+
+            // Update Progress Bars
+            const yardPercent = Math.min(100, (currentYards / yardGoal) * 100).toFixed(1);
+            document.getElementById('yardsProgressBar').style.width = `${yardPercent}%`;
+            document.getElementById('yardsProgressPercent').textContent = `${yardPercent}%`;
+
+            const tdPercent = Math.min(100, (currentTDs / tdGoal) * 100).toFixed(1);
+            document.getElementById('tdsProgressBar').style.width = `${tdPercent}%`;
+            document.getElementById('tdsProgressPercent').textContent = `${tdPercent}%`;
+
+            // Calculate yards needed
+            const yardsNeeded = Math.max(0, yardGoal - currentYards);
+            document.getElementById('yardsNeeded').textContent = yardsNeeded.toLocaleString();
+
+            const yardsPerGame = gamesRemaining > 0 ? (yardsNeeded / gamesRemaining).toFixed(1) : 0;
+            document.getElementById('yardsPerGame').textContent = yardsPerGame;
+
+            // Calculate TDs needed
+            const tdsNeeded = Math.max(0, tdGoal - currentTDs);
+            document.getElementById('tdsNeeded').textContent = tdsNeeded;
+
+            const tdsPerGame = gamesRemaining > 0 ? (tdsNeeded / gamesRemaining).toFixed(2) : 0;
+            document.getElementById('tdsPerGame').textContent = tdsPerGame;
+
+            // Calculate current pace
+            const yardsPace = gamesPlayed > 0 ? Math.round((currentYards / gamesPlayed) * currentSchedule) : 0;
+            const tdsPace = gamesPlayed > 0 ? ((currentTDs / gamesPlayed) * currentSchedule).toFixed(1) : 0;
+
+            document.getElementById('yardsPace').textContent = yardsPace.toLocaleString();
+            document.getElementById('tdsPace').textContent = tdsPace;
+
+            // Update colors based on pace
+            const yardsPaceEl = document.getElementById('yardsPace');
+            yardsPaceEl.className = yardsPace >= yardGoal ? 'good' : 'warning';
+
+            const tdsPaceEl = document.getElementById('tdsPace');
+            tdsPaceEl.className = parseFloat(tdsPace) >= tdGoal ? 'good' : 'warning';
+        }
+
+        function renderSchedule(games) {
+            const grid = document.getElementById('scheduleGrid');
+            grid.innerHTML = ''; // Clear existing
+
+            const fullSchedule = [
+                 { week: 1, opponent: "MIN Vikings", time: "Monday, 8:15 PM", date: "Sept 8" },
+                 { week: 2, opponent: "@ Detroit Lions", time: "Sunday, 12:00 PM", date: "Sept 14" },
+                 { week: 3, opponent: "Indianapolis Colts", time: "Sunday, 12:00 PM", date: "Sept 22" },
+                 { week: 4, opponent: "@ Las Vegas Raiders", time: "Sunday, 3:25 PM", date: "Sept 29" },
+                 { week: 5, opponent: "BYE", time: "BYE", date: "" },
+                 { week: 6, opponent: "@ Washington Commanders", time: "Monday, 8:15 PM", date: "Oct 14" },
+                 { week: 7, opponent: "New Orleans Saints", time: "Sunday, 12:00 PM", date: "Oct 20" },
+                 { week: 8, opponent: "@ Baltimore Ravens", time: "Sunday, 12:00 PM", date: "Oct 27" },
+                 { week: 9, opponent: "@ Cincinnati Bengals", time: "Sunday, 12:00 PM", date: "Nov 2" },
+                 { week: 10, opponent: "Dallas Cowboys", time: "Sunday, 3:25 PM", date: "Nov 9" },
+                 { week: 11, opponent: "Green Bay Packers", time: "Sunday, 12:00 PM", date: "Nov 16" },
+                 { week: 12, opponent: "@ Minnesota Vikings", time: "Sunday, 12:00 PM", date: "Nov 23" },
+                 { week: 13, opponent: "@ Philadelphia Eagles", time: "Friday, 2:30 PM", date: "Nov 28 (Black Friday)" },
+                 { week: 14, opponent: "@ Cleveland Browns", time: "Sunday, 12:00 PM", date: "Dec 7" },
+                 { week: 15, opponent: "Pittsburgh Steelers", time: "Sunday, 12:00 PM", date: "Dec 14" },
+                 { week: 16, opponent: "Green Bay Packers", time: "Saturday, TBD", date: "Dec 20" },
+                 { week: 17, opponent: "@ San Francisco 49ers", time: "Sunday, 7:20 PM", date: "Dec 28 (SNF)" },
+                 { week: 18, opponent: "Detroit Lions", time: "TBD", date: "Jan 3/4" }
+            ];
+
+            fullSchedule.forEach(baseGame => {
+                const playedGame = games.find(g => g.week === baseGame.week);
+
+                let cardClass = 'upcoming';
+                let resultText = baseGame.opponent.includes("BYE") ? "BYE WEEK" : "Upcoming";
+                let highlightLink = "";
+                let isBye = baseGame.opponent.includes("BYE");
+
+                // Determine opponent name
+                // If we have played game data, use that opponent name (formatted)
+                // Otherwise use the baseGame opponent
+                let displayOpponent = baseGame.opponent;
+
+                if (playedGame) {
+                    // Update result from played data if available
+                    if (playedGame.played) {
+                        cardClass = 'played';
+                        resultText = playedGame.result;
+                        highlightLink = playedGame.highlights_url;
+
+                        // Use JSON opponent if available to match the game result
+                        let jsonOpp = playedGame.opponent;
+
+                        if (jsonOpp.startsWith('@')) {
+                            displayOpponent = jsonOpp; // "@ DET"
+                        } else {
+                            displayOpponent = "vs " + jsonOpp; // "vs MIN"
+                        }
+                    }
+                } else if (!isBye) {
+                     // Ensure prefix for baseGame if missing (though they have it)
+                     if (!displayOpponent.startsWith('@') && !displayOpponent.startsWith('vs') && !displayOpponent.includes('BYE')) {
+                         displayOpponent = "vs " + displayOpponent;
+                     }
+                }
+
+                const cardDiv = document.createElement('div');
+                cardDiv.className = `game-card ${cardClass}`;
+
+                if (isBye) {
+                    cardDiv.innerHTML = `<h3>🏖️ BYE WEEK 🏖️</h3>`;
+                } else {
+                    let linkHtml = '';
+                    if (highlightLink) {
+                        linkHtml = `<div class="game-link"><a href="${highlightLink}" target="_blank">Highlights</a></div>`;
+                    } else {
+                        linkHtml = `<div class="game-link"><a href="#" class="preview">Preview</a></div>`;
+                    }
+
+                    cardDiv.innerHTML = `
+                        <div class="week-label">Week ${baseGame.week}</div>
+                        <div class="game-info">
+                            <h3>${displayOpponent}</h3>
+                            <p>${resultText}</p>
+                        </div>
+                        <div class="game-time">
+                            <p>${baseGame.time}</p>
+                            <span>${baseGame.date}</span>
+                        </div>
+                        ${linkHtml}
+                    `;
+                }
+                grid.appendChild(cardDiv);
+            });
+        }
+
         function setSchedule(games) {
             currentSchedule = games;
-            
+
             // Update button states
             document.querySelectorAll('.toggle-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             event.target.classList.add('active');
-            
-            // Calculate remaining games
-            const gamesRemaining = games - gamesPlayed;
-            document.getElementById('gamesRemaining').textContent = gamesRemaining;
-            
-            // Calculate yards needed per game
-            const yardsNeeded = yardGoal - currentYards;
-            const yardsPerGame = (yardsNeeded / gamesRemaining).toFixed(1);
-            document.getElementById('yardsPerGame').textContent = yardsPerGame;
-            
-            // Calculate TDs needed per game
-            const tdsNeeded = tdGoal - currentTDs;
-            const tdsPerGame = (tdsNeeded / gamesRemaining).toFixed(2);
-            document.getElementById('tdsPerGame').textContent = tdsPerGame;
-            
-            // Calculate current pace
-            const yardsPace = Math.round((currentYards / gamesPlayed) * games);
-            const tdsPace = ((currentTDs / gamesPlayed) * games).toFixed(1);
-            
-            document.getElementById('yardsPace').textContent = yardsPace;
-            document.getElementById('tdsPace').textContent = tdsPace;
-            
-            // Update colors based on pace
-            const yardsPaceEl = document.getElementById('yardsPace');
-            yardsPaceEl.className = yardsPace >= yardGoal ? 'good' : 'warning';
-            
-            const tdsPaceEl = document.getElementById('tdsPace');
-            tdsPaceEl.className = parseFloat(tdsPace) >= tdGoal ? 'good' : 'warning';
+
+            updateUI();
         }
 
-        // Initialize with 17 games
+        // Initialize
         window.onload = function() {
-            const gamesRemaining = currentSchedule - gamesPlayed;
-            document.getElementById('gamesRemaining').textContent = gamesRemaining;
-            
-            const yardsNeeded = yardGoal - currentYards;
-            const yardsPerGame = (yardsNeeded / gamesRemaining).toFixed(1);
-            document.getElementById('yardsPerGame').textContent = yardsPerGame;
-            
-            const tdsNeeded = tdGoal - currentTDs;
-            const tdsPerGame = (tdsNeeded / gamesRemaining).toFixed(2);
-            document.getElementById('tdsPerGame').textContent = tdsPerGame;
-            
-            const yardsPace = Math.round((currentYards / gamesPlayed) * currentSchedule);
-            const tdsPace = ((currentTDs / gamesPlayed) * currentSchedule).toFixed(1);
-            
-            document.getElementById('yardsPace').textContent = yardsPace;
-            document.getElementById('tdsPace').textContent = tdsPace;
+            fetchStats();
         }
     </script>
 </body>
 </html>
-

@@ -1,0 +1,100 @@
+        function renderSchedule(games) {
+            const grid = document.getElementById('scheduleGrid');
+            grid.innerHTML = ''; // Clear existing
+
+            const fullSchedule = [
+                 { week: 1, opponent: "MIN Vikings", time: "Monday, 8:15 PM", date: "Sept 8" },
+                 { week: 2, opponent: "@ Detroit Lions", time: "Sunday, 12:00 PM", date: "Sept 14" },
+                 { week: 3, opponent: "Indianapolis Colts", time: "Sunday, 12:00 PM", date: "Sept 22" },
+                 { week: 4, opponent: "@ Las Vegas Raiders", time: "Sunday, 3:25 PM", date: "Sept 29" },
+                 { week: 5, opponent: "BYE", time: "BYE", date: "" },
+                 { week: 6, opponent: "@ Washington Commanders", time: "Monday, 8:15 PM", date: "Oct 14" },
+                 { week: 7, opponent: "New Orleans Saints", time: "Sunday, 12:00 PM", date: "Oct 20" },
+                 { week: 8, opponent: "@ Baltimore Ravens", time: "Sunday, 12:00 PM", date: "Oct 27" },
+                 { week: 9, opponent: "@ Cincinnati Bengals", time: "Sunday, 12:00 PM", date: "Nov 2" },
+                 { week: 10, opponent: "Dallas Cowboys", time: "Sunday, 3:25 PM", date: "Nov 9" },
+                 { week: 11, opponent: "Green Bay Packers", time: "Sunday, 12:00 PM", date: "Nov 16" },
+                 { week: 12, opponent: "@ Minnesota Vikings", time: "Sunday, 12:00 PM", date: "Nov 23" },
+                 { week: 13, opponent: "@ Philadelphia Eagles", time: "Friday, 2:30 PM", date: "Nov 28 (Black Friday)" },
+                 { week: 14, opponent: "@ Cleveland Browns", time: "Sunday, 12:00 PM", date: "Dec 7" },
+                 { week: 15, opponent: "Pittsburgh Steelers", time: "Sunday, 12:00 PM", date: "Dec 14" },
+                 { week: 16, opponent: "Green Bay Packers", time: "Saturday, TBD", date: "Dec 20" },
+                 { week: 17, opponent: "@ San Francisco 49ers", time: "Sunday, 7:20 PM", date: "Dec 28 (SNF)" },
+                 { week: 18, opponent: "Detroit Lions", time: "TBD", date: "Jan 3/4" }
+            ];
+
+            fullSchedule.forEach(baseGame => {
+                const playedGame = games.find(g => g.week === baseGame.week);
+
+                let cardClass = 'upcoming';
+                let resultText = baseGame.opponent.includes("BYE") ? "BYE WEEK" : "Upcoming";
+                let highlightLink = "";
+                let isBye = baseGame.opponent.includes("BYE");
+
+                // Determine opponent name
+                // If we have played game data, use that opponent name (formatted)
+                // Otherwise use the baseGame opponent
+                let displayOpponent = baseGame.opponent;
+
+                if (playedGame) {
+                    // Update result from played data if available
+                    if (playedGame.played) {
+                        cardClass = 'played';
+                        resultText = playedGame.result;
+                        highlightLink = playedGame.highlights_url;
+
+                        // Format opponent from JSON (e.g., "@ DET" or "MIN") to match style if possible
+                        // Or just use what we have.
+                        // JSON: "MIN", "@ DET". Base: "MIN Vikings", "@ Detroit Lions".
+                        // Use base unless the opponent code in JSON suggests a different team than base.
+                        // Actually, if there is a mismatch (like Indianapolis vs Dallas), we must use the JSON opponent.
+                        // JSON only has abbr (e.g. DAL). We should try to display it nicely.
+                        // Simple heuristic: If JSON exists, use it but try to keep the "@" format.
+
+                        let jsonOpp = playedGame.opponent;
+                        // If JSON is "DAL", and Base is "Indianapolis Colts", we want to show "Dallas Cowboys" or "DAL".
+                        // "vs DAL" or "@ DAL".
+
+                        // Let's just use the JSON opponent string, prefixed with vs if no @.
+                        if (jsonOpp.startsWith('@')) {
+                            displayOpponent = jsonOpp; // "@ DET"
+                        } else {
+                            displayOpponent = "vs " + jsonOpp; // "vs MIN"
+                        }
+                    }
+                } else if (!isBye) {
+                     // Ensure prefix for baseGame if missing (though they have it)
+                     if (!displayOpponent.startsWith('@') && !displayOpponent.startsWith('vs') && !displayOpponent.includes('BYE')) {
+                         displayOpponent = "vs " + displayOpponent;
+                     }
+                }
+
+                const cardDiv = document.createElement('div');
+                cardDiv.className = `game-card ${cardClass}`;
+
+                if (isBye) {
+                    cardDiv.innerHTML = `<h3>🏖️ BYE WEEK 🏖️</h3>`;
+                } else {
+                    let linkHtml = '';
+                    if (highlightLink) {
+                        linkHtml = `<div class="game-link"><a href="${highlightLink}" target="_blank">Highlights</a></div>`;
+                    } else {
+                        linkHtml = `<div class="game-link"><a href="#" class="preview">Preview</a></div>`;
+                    }
+
+                    cardDiv.innerHTML = `
+                        <div class="week-label">Week ${baseGame.week}</div>
+                        <div class="game-info">
+                            <h3>${displayOpponent}</h3>
+                            <p>${resultText}</p>
+                        </div>
+                        <div class="game-time">
+                            <p>${baseGame.time}</p>
+                            <span>${baseGame.date}</span>
+                        </div>
+                        ${linkHtml}
+                    `;
+                }
+                grid.appendChild(cardDiv);
+            });
+        }

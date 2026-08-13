@@ -183,12 +183,12 @@
     </div>
   </div>
 
-  <script>
-    // --- Update these numbers after every game ---
+<script>
+    // --- Stats reset to 0 for the start of the 2026 Regular Season ---
     const currentStats = {
-      gamesPlayed: 1,
-      passingYards: 312,
-      touchdowns: 3
+      gamesPlayed: 0, // Starts at 0 until September 13th
+      passingYards: 0,
+      touchdowns: 0
     };
 
     const GOAL_YARDS = 4000;
@@ -199,9 +199,14 @@
       document.getElementById('currentYards').innerText = currentStats.passingYards.toLocaleString();
       document.getElementById('currentTDs').innerText = currentStats.touchdowns;
 
-      // Calculate Pace
-      const paceYards = currentStats.passingYards / currentStats.gamesPlayed;
-      const paceTDs = currentStats.touchdowns / currentStats.gamesPlayed;
+      // Calculate Pace (with a safety check to prevent dividing by zero before Week 1)
+      let paceYards = 0;
+      let paceTDs = 0;
+      
+      if (currentStats.gamesPlayed > 0) {
+        paceYards = currentStats.passingYards / currentStats.gamesPlayed;
+        paceTDs = currentStats.touchdowns / currentStats.gamesPlayed;
+      }
 
       document.getElementById('pace16Yards').innerText = Math.round(paceYards * 16).toLocaleString();
       document.getElementById('pace17Yards').innerText = Math.round(paceYards * 17).toLocaleString();
@@ -225,7 +230,6 @@
       const container = document.getElementById('insightsContainer');
       
       try {
-        // Look for the JSON file created by the Python scraper
         const response = await fetch('insights.json');
         
         if (!response.ok) {
@@ -233,11 +237,8 @@
         }
         
         const insights = await response.json();
+        container.innerHTML = ''; // Clear out the HTML
         
-        // Clear out the HTML
-        container.innerHTML = '';
-        
-        // Loop through the scraped data and create a new HTML block for each one
         insights.forEach(insight => {
           const itemDiv = document.createElement('div');
           itemDiv.className = 'insight-item';
@@ -247,19 +248,16 @@
             <p><strong>${insight.headline}</strong></p>
             <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px;">${insight.summary}</p>
           `;
-          
           container.appendChild(itemDiv);
         });
 
-        // Fallback just in case the scraper pulls an empty list
         if (insights.length === 0) {
           container.innerHTML = '<div class="insight-item"><p>No recent insights found this week.</p></div>';
         }
 
       } catch (error) {
         console.error("Error loading pregame insights:", error);
-        // This shows if the file doesn't exist yet (e.g., before the scraper runs for the first time)
-        container.innerHTML = '<div class="insight-item"><p>Awaiting latest pregame insights... check back later.</p></div>';
+        container.innerHTML = '<div class="insight-item"><p>Awaiting latest pregame insights for the upcoming matchup... check back later.</p></div>';
       }
     }
 

@@ -2,10 +2,9 @@ name: Caleb Williams Pregame Scraper
 
 on:
   schedule:
-    - cron: '0 12 * * 0' # Runs every Sunday at noon UTC (Adjust as needed)
-  workflow_dispatch: # Allows you to run it manually
+    - cron: '0 12 * * 0' # Runs every Sunday at noon UTC
+  workflow_dispatch:
 
-# 1. ADD THIS BLOCK TO FIX EXIT CODE 128 PERMISSIONS
 permissions:
   contents: write
 
@@ -13,11 +12,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # 2. UPDATE TO v4 TO FIX NODE DEPRECATION
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          # Change 'main' to 'master' if that is your default branch name
+          ref: main 
 
-      # 3. UPDATE TO v5 TO FIX NODE DEPRECATION
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -29,13 +29,10 @@ jobs:
           pip install requests beautifulsoup4
 
       - name: Run Scraper
-        run: python scraper.py # Make sure this matches your python filename
+        run: python scraper.py
 
-      # 4. FIX GIT CONFIG & PREVENT CRASHES IF NOTHING CHANGES
       - name: Commit and Push Changes
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add insights.json
-          # Only commit and push if there are changes to avoid exit code 128
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update pregame insights" && git push)
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update Caleb Williams pregame insights"
+          file_pattern: "insights.json"

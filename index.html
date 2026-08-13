@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Caleb Williams 2026 Tracker | AIOMGWTFBBQ</title>
+  <title>Caleb Williams 2026-2027 Season Tracker | AIOMGWTFBBQ</title>
   <style>
     :root {
       --bg-color: #0b1120;
@@ -52,6 +52,7 @@
     header { text-align: center; margin-bottom: 3rem; }
     header h1 { font-size: 3rem; font-weight: 900; letter-spacing: -1px; text-shadow: 0 0 20px rgba(200,56,3,0.5); }
     header p { color: var(--text-muted); font-size: 1.1rem; margin-top: 0.5rem; }
+    .season-dates { font-size: 0.85rem !important; color: var(--bears-orange) !important; font-weight: bold; letter-spacing: 1px; margin-top: 8px !important; }
 
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
 
@@ -98,7 +99,7 @@
   <!-- MVP Marquee -->
   <div class="ticker-wrap">
     <div class="ticker">
-      <span>🚨 LATEST: Caleb Williams surges in 2026 MVP Odds after 4 TD performance</span>
+      <span>🚨 LATEST: Caleb Williams surges in 2026-27 MVP Odds after 4 TD performance</span>
       <span>📰 ESPN: "The Bears offense looks unstoppable under Williams"</span>
       <span>🏆 MVP TRACKER: Williams currently holds 28% of first-place media votes</span>
     </div>
@@ -106,8 +107,9 @@
 
   <div class="container">
     <header>
-      <h1>CW18 // 2026 TRACKER</h1>
+      <h1>CW18 // 2026-2027 TRACKER</h1>
       <p>The Path to 4,000 Yards & 30 Touchdowns</p>
+      <p class="season-dates">AUGUST 2026 — FEBRUARY 2027</p>
     </header>
 
     <div class="grid">
@@ -175,17 +177,13 @@
       <div class="card insights-card">
         <h2>🔥 Weekly Pregame Insights</h2>
         <div id="insightsContainer">
-          <div class="insight-item">
-            <div class="insight-date">WEEK 1 vs PACKERS</div>
-            <p>The Packers defense ranked 18th against the deep ball last season. Look for Caleb to target Rome Odunze on vertical concepts early.</p>
-          </div>
-          <!-- The Web Scraper will inject new insights here -->
+          <!-- The Web Scraper will inject new insights here dynamically -->
         </div>
       </div>
     </div>
   </div>
 
-<script>
+  <script>
     // --- Update these numbers after every game ---
     const currentStats = {
       gamesPlayed: 1,
@@ -222,7 +220,7 @@
       document.getElementById('tdsPercent').innerText = tdsPct + '%';
     }
 
-    // --- NEW: Fetch and display insights from the scraper ---
+    // --- Fetch and display insights from the scraper ---
     async function loadInsights() {
       const container = document.getElementById('insightsContainer');
       
@@ -236,7 +234,7 @@
         
         const insights = await response.json();
         
-        // Clear out the hardcoded placeholder HTML
+        // Clear out the HTML
         container.innerHTML = '';
         
         // Loop through the scraped data and create a new HTML block for each one

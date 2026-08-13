@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Caleb Williams 2026-2027 Season Tracker | AIOMGWTFBBQ</title>
+  <title>CW18 Tracker & Bears Hub | AIOMGWTFBBQ</title>
   <style>
     :root {
       --bg-color: #0b1120;
@@ -14,258 +14,143 @@
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', system-ui, sans-serif; }
+    body { background: radial-gradient(circle at top left, #1e293b, var(--bg-color)); color: var(--text-main); min-height: 100vh; padding-bottom: 3rem; }
     
-    body { 
-      background: radial-gradient(circle at top left, #1e293b, var(--bg-color)); 
-      color: var(--text-main); 
-      min-height: 100vh; 
-    }
-
-    /* MVP Ticker */
-    .ticker-wrap {
-      width: 100%;
-      background: var(--bears-orange);
-      color: #fff;
-      padding: 8px 0;
-      overflow: hidden;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-size: 0.85rem;
-    }
-    .ticker {
-      display: inline-block;
-      white-space: nowrap;
-      animation: ticker 20s linear infinite;
-    }
-    @keyframes ticker {
-      0% { transform: translate3d(100%, 0, 0); }
-      100% { transform: translate3d(-100%, 0, 0); }
-    }
-    .ticker span { margin-right: 50px; }
-
     /* Layout */
-    .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
+    header { text-align: center; margin-bottom: 2rem; }
+    header h1 { font-size: 2.5rem; font-weight: 900; text-transform: uppercase; color: #fff; }
+    header h1 span { color: var(--bears-orange); }
     
-    header { text-align: center; margin-bottom: 3rem; }
-    header h1 { font-size: 3rem; font-weight: 900; letter-spacing: -1px; text-shadow: 0 0 20px rgba(200,56,3,0.5); }
-    header p { color: var(--text-muted); font-size: 1.1rem; margin-top: 0.5rem; }
-    .season-dates { font-size: 0.85rem !important; color: var(--bears-orange) !important; font-weight: bold; letter-spacing: 1px; margin-top: 8px !important; }
+    /* Countdown */
+    .countdown-banner { background: var(--glass-bg); border: 1px solid var(--bears-orange); border-radius: 12px; padding: 1.5rem; text-align: center; margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(200,56,3,0.15); }
+    .countdown-banner h3 { color: var(--bears-orange); font-size: 1rem; text-transform: uppercase; margin-bottom: 10px; }
+    #matchupName { font-size: 1.5rem; font-weight: bold; margin-bottom: 15px; }
+    .timer { display: flex; justify-content: center; gap: 15px; font-size: 2rem; font-weight: 900; }
+    .timer-box { display: flex; flex-direction: column; align-items: center; }
+    .timer-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: normal; }
 
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+    .card { background: var(--glass-bg); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 16px; padding: 1.5rem; }
+    .card h2 { font-size: 1.2rem; color: var(--bears-orange); margin-bottom: 1rem; text-transform: uppercase; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; }
 
-    /* Glassmorphism Cards */
-    .card {
-      background: var(--glass-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--glass-border);
-      border-radius: 16px;
-      padding: 2rem;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-      position: relative;
-      overflow: hidden;
-    }
-    .card::before {
-      content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--bears-orange);
-    }
-    .card h2 { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 2px; }
-    
-    /* Stats Display */
-    .stat-value { font-size: 3.5rem; font-weight: 800; line-height: 1; margin-bottom: 0.5rem; }
-    .stat-label { font-size: 0.9rem; color: var(--bears-orange); font-weight: bold; }
-
-    /* Pace section */
-    .pace-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--glass-border); }
-    .pace-box p { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; }
-    .pace-box span { font-size: 1.5rem; font-weight: 700; color: #fff; }
-
-    /* Progress Bars */
-    .progress-container { margin-top: 1rem; background: rgba(0,0,0,0.5); border-radius: 8px; height: 12px; overflow: hidden; position: relative; }
-    .progress-bar { height: 100%; background: linear-gradient(90deg, var(--bears-orange), #ff6b35); width: 0%; transition: width 1s ease-in-out; }
-    .progress-text { display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 6px; color: var(--text-muted); }
-
-    /* Pregame Insights */
-    .insights-card { grid-column: 1 / -1; }
-    .insight-item { padding: 1rem 0; border-bottom: 1px solid var(--glass-border); }
-    .insight-item:last-child { border-bottom: none; }
-    .insight-date { font-size: 0.8rem; color: var(--bears-orange); font-weight: bold; margin-bottom: 4px; }
+    /* Media/News Styles */
+    .news-item { margin-bottom: 1rem; line-height: 1.4; }
+    .news-item a { color: #fff; text-decoration: none; font-weight: bold; font-size: 1rem; transition: color 0.2s; }
+    .news-item a:hover { color: var(--bears-orange); }
+    .video-container { position: relative; padding-bottom: 56.25%; height: 0; margin-bottom: 1rem; border-radius: 8px; overflow: hidden; }
+    .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
   </style>
 </head>
 <body>
 
-  <!-- MVP Marquee -->
-  <div class="ticker-wrap">
-    <div class="ticker">
-      <span>🚨 LATEST: Caleb Williams surges in 2026-27 MVP Odds after 4 TD performance</span>
-      <span>📰 ESPN: "The Bears offense looks unstoppable under Williams"</span>
-      <span>🏆 MVP TRACKER: Williams currently holds 28% of first-place media votes</span>
-    </div>
-  </div>
-
   <div class="container">
     <header>
-      <h1>CW18 // 2026-2027 TRACKER</h1>
-      <p>The Path to 4,000 Yards & 30 Touchdowns</p>
-      <p class="season-dates">AUGUST 2026 — FEBRUARY 2027</p>
+      <h1><span>CW18</span> Daily Hub</h1>
     </header>
 
+    <!-- Matchup & Countdown -->
+    <div class="countdown-banner" id="countdownBanner" style="display: none;">
+      <h3>Next Matchup</h3>
+      <div id="matchupName">Loading...</div>
+      <div class="timer" id="timer">
+        <div class="timer-box"><span id="days">00</span><span class="timer-label">Days</span></div>:
+        <div class="timer-box"><span id="hours">00</span><span class="timer-label">Hours</span></div>:
+        <div class="timer-box"><span id="minutes">00</span><span class="timer-label">Mins</span></div>
+      </div>
+    </div>
+
     <div class="grid">
-      <!-- Passing Yards Card -->
+      <!-- Latest Videos -->
       <div class="card">
-        <h2>Passing Yards</h2>
-        <div class="stat-value" id="currentYards">0</div>
-        <div class="stat-label">CURRENT YARDS</div>
-        
-        <div class="progress-text">
-          <span>Goal Progress</span>
-          <span id="yardsPercent">0%</span>
-        </div>
-        <div class="progress-container">
-          <div class="progress-bar" id="yardsBar"></div>
-        </div>
-        <div class="progress-text">
-          <span>0</span>
-          <span>4,000 YDS</span>
-        </div>
-
-        <div class="pace-grid">
-          <div class="pace-box">
-            <p>16-Game Pace</p>
-            <span id="pace16Yards">0</span>
-          </div>
-          <div class="pace-box">
-            <p>17-Game Pace</p>
-            <span id="pace17Yards">0</span>
-          </div>
-        </div>
+        <h2>📺 Bears Network Live</h2>
+        <div id="videoContainer"><p style="color: var(--text-muted);">Loading latest videos...</p></div>
       </div>
 
-      <!-- Touchdowns Card -->
+      <!-- Matchup News -->
       <div class="card">
-        <h2>Touchdowns</h2>
-        <div class="stat-value" id="currentTDs">0</div>
-        <div class="stat-label">TOTAL PASSING TDs</div>
-        
-        <div class="progress-text">
-          <span>Goal Progress</span>
-          <span id="tdsPercent">0%</span>
-        </div>
-        <div class="progress-container">
-          <div class="progress-bar" id="tdsBar"></div>
-        </div>
-        <div class="progress-text">
-          <span>0</span>
-          <span>30 TDs</span>
-        </div>
-
-        <div class="pace-grid">
-          <div class="pace-box">
-            <p>16-Game Pace</p>
-            <span id="pace16TDs">0</span>
-          </div>
-          <div class="pace-box">
-            <p>17-Game Pace</p>
-            <span id="pace17TDs">0</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Pregame Insights Card -->
-      <div class="card insights-card">
-        <h2>🔥 Weekly Pregame Insights</h2>
-        <div id="insightsContainer">
-          <!-- The Web Scraper will inject new insights here dynamically -->
-        </div>
+        <h2>📰 Breaking News</h2>
+        <div id="newsContainer"><p style="color: var(--text-muted);">Scanning for updates...</p></div>
       </div>
     </div>
   </div>
 
-<script>
-    // --- Stats reset to 0 for the start of the 2026 Regular Season ---
-    const currentStats = {
-      gamesPlayed: 0, // Starts at 0 until September 13th
-      passingYards: 0,
-      touchdowns: 0
-    };
+  <script>
+    let kickoffTime = null;
 
-    const GOAL_YARDS = 4000;
-    const GOAL_TDS = 30;
+    function updateTimer() {
+      if (!kickoffTime) return;
+      const now = new Date().getTime();
+      const distance = kickoffTime - now;
 
-    function calculateTracker() {
-      // Set current stats
-      document.getElementById('currentYards').innerText = currentStats.passingYards.toLocaleString();
-      document.getElementById('currentTDs').innerText = currentStats.touchdowns;
-
-      // Calculate Pace (with a safety check to prevent dividing by zero before Week 1)
-      let paceYards = 0;
-      let paceTDs = 0;
-      
-      if (currentStats.gamesPlayed > 0) {
-        paceYards = currentStats.passingYards / currentStats.gamesPlayed;
-        paceTDs = currentStats.touchdowns / currentStats.gamesPlayed;
+      if (distance < 0) {
+        document.getElementById("timer").innerHTML = "<div style='color: var(--bears-orange);'>GAME DAY</div>";
+        return;
       }
 
-      document.getElementById('pace16Yards').innerText = Math.round(paceYards * 16).toLocaleString();
-      document.getElementById('pace17Yards').innerText = Math.round(paceYards * 17).toLocaleString();
-      
-      document.getElementById('pace16TDs').innerText = Math.round(paceTDs * 16);
-      document.getElementById('pace17TDs').innerText = Math.round(paceTDs * 17);
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 
-      // Progress Bars
-      const yardsPct = Math.min((currentStats.passingYards / GOAL_YARDS) * 100, 100).toFixed(1);
-      const tdsPct = Math.min((currentStats.touchdowns / GOAL_TDS) * 100, 100).toFixed(1);
-
-      document.getElementById('yardsBar').style.width = yardsPct + '%';
-      document.getElementById('yardsPercent').innerText = yardsPct + '%';
-
-      document.getElementById('tdsBar').style.width = tdsPct + '%';
-      document.getElementById('tdsPercent').innerText = tdsPct + '%';
+      document.getElementById("days").innerText = days.toString().padStart(2, '0');
+      document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+      document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
     }
 
-    // --- Fetch and display insights from the scraper ---
-    async function loadInsights() {
-      const container = document.getElementById('insightsContainer');
-      
+    async function loadDashboard() {
       try {
-        const response = await fetch('insights.json');
-        
-        if (!response.ok) {
-          throw new Error('Could not load insights.json');
-        }
-        
-        const insights = await response.json();
-        container.innerHTML = ''; // Clear out the HTML
-        
-        insights.forEach(insight => {
-          const itemDiv = document.createElement('div');
-          itemDiv.className = 'insight-item';
-          
-          itemDiv.innerHTML = `
-            <div class="insight-date">${insight.date.toUpperCase()}</div>
-            <p><strong>${insight.headline}</strong></p>
-            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px;">${insight.summary}</p>
-          `;
-          container.appendChild(itemDiv);
-        });
+        const response = await fetch(`insights.json?t=${new Date().getTime()}`); // Cache buster
+        const data = await response.json();
 
-        if (insights.length === 0) {
-          container.innerHTML = '<div class="insight-item"><p>No recent insights found this week.</p></div>';
+        // 1. Setup Countdown
+        if (data.game) {
+          document.getElementById('countdownBanner').style.display = 'block';
+          document.getElementById('matchupName').innerText = data.game.matchup;
+          kickoffTime = new Date(data.game.kickoff).getTime();
+          updateTimer();
+          setInterval(updateTimer, 60000); // Update timer every minute
+        }
+
+        // 2. Load Videos
+        const vidDiv = document.getElementById('videoContainer');
+        vidDiv.innerHTML = '';
+        if (data.videos && data.videos.length > 0) {
+          data.videos.forEach(vid => {
+            vidDiv.innerHTML += `
+              <div style="margin-bottom: 1.5rem;">
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px;">${vid.title}</p>
+                <div class="video-container">
+                  <iframe src="${vid.embed_url}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+              </div>
+            `;
+          });
+        } else {
+          vidDiv.innerHTML = '<p>No recent videos found.</p>';
+        }
+
+        // 3. Load News
+        const newsDiv = document.getElementById('newsContainer');
+        newsDiv.innerHTML = '';
+        if (data.news && data.news.length > 0) {
+          data.news.forEach(item => {
+            newsDiv.innerHTML += `
+              <div class="news-item">
+                <a href="${item.link}" target="_blank">↳ ${item.headline}</a>
+              </div>
+            `;
+          });
+        } else {
+          newsDiv.innerHTML = '<p style="color: var(--text-muted);">No breaking matchup news at this exact moment. Check the videos!</p>';
         }
 
       } catch (error) {
-        console.error("Error loading pregame insights:", error);
-        container.innerHTML = '<div class="insight-item"><p>Awaiting latest pregame insights for the upcoming matchup... check back later.</p></div>';
+        console.error("Dashboard error:", error);
       }
     }
 
-    // Run both calculations and the fetch request when the page loads
-    document.addEventListener('DOMContentLoaded', () => {
-      calculateTracker();
-      loadInsights();
-    });
+    document.addEventListener('DOMContentLoaded', loadDashboard);
   </script>
 </body>
 </html>

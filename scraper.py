@@ -3,12 +3,12 @@ from bs4 import BeautifulSoup
 import json
 import datetime
 
-# Configuration
-SEARCH_URL = "https://www.cbssports.com/nfl/players/3139822/caleb-williams/news/"
+# Configuration - Updated to the Bears team page to catch matchup news
+SEARCH_URL = "https://www.cbssports.com/nfl/teams/CHI/chicago-bears/"
 OUTPUT_FILE = "insights.json"
 
 def scrape_insights():
-    print(f"[{datetime.datetime.now()}] Initiating Caleb Williams Pregame Scrape...")
+    print(f"[{datetime.datetime.now()}] Initiating Bears/Caleb Williams Pregame Scrape...")
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
     }
@@ -20,21 +20,27 @@ def scrape_insights():
         
         insights = []
         
-        # This targets the news feed items on CBS Sports player pages (adjust class names if targeting a different site)
+        # Target the news feed items on CBS Sports team pages
         news_items = soup.find_all('div', class_='ArticleList-articleText')
         
-        for item in news_items[:3]: # Grab the top 3 most recent articles/blurbs
+        for item in news_items:
             title_tag = item.find('a')
             summary_tag = item.find('p')
             
             if title_tag and summary_tag:
+                title = title_tag.text.strip()
+                summary = summary_tag.text.strip()
+                
                 insights.append({
                     "date": datetime.datetime.now().strftime("%B %d, %Y"),
-                    "headline": title_tag.text.strip(),
-                    "summary": summary_tag.text.strip()
+                    "headline": title,
+                    "summary": summary
                 })
+            
+            # Stop once we have 3 good insights
+            if len(insights) >= 3:
+                break
                 
-        # Save scraped data to a JSON file so the HTML can read it
         with open(OUTPUT_FILE, 'w') as f:
             json.dump(insights, f, indent=4)
             

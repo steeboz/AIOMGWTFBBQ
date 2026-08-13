@@ -3,154 +3,166 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CW18 Tracker & Bears Hub | AIOMGWTFBBQ</title>
+  <title>Bears Say NO to Hammond | The Daily Gridiron</title>
   <style>
     :root {
-      --bg-color: #0b1120;
+      --primary-red: #d32f2f;
+      --dark-gray: #1a1a1a;
+      --light-gray: #f4f4f4;
       --bears-navy: #0b162a;
       --bears-orange: #c83803;
-      --glass-bg: rgba(255, 255, 255, 0.05);
-      --glass-border: rgba(255, 255, 255, 0.1);
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', system-ui, sans-serif; }
-    body { background: radial-gradient(circle at top left, #1e293b, var(--bg-color)); color: var(--text-main); min-height: 100vh; padding-bottom: 3rem; }
     
-    /* Layout */
-    .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
-    header { text-align: center; margin-bottom: 2rem; }
-    header h1 { font-size: 2.5rem; font-weight: 900; text-transform: uppercase; color: #fff; }
-    header h1 span { color: var(--bears-orange); }
+    body { 
+      font-family: 'Helvetica Neue', Arial, sans-serif; 
+      margin: 0; 
+      padding: 0; 
+      background: var(--light-gray); 
+      color: #333; 
+    }
     
-    /* Countdown */
-    .countdown-banner { background: var(--glass-bg); border: 1px solid var(--bears-orange); border-radius: 12px; padding: 1.5rem; text-align: center; margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(200,56,3,0.15); }
-    .countdown-banner h3 { color: var(--bears-orange); font-size: 1rem; text-transform: uppercase; margin-bottom: 10px; }
-    #matchupName { font-size: 1.5rem; font-weight: bold; margin-bottom: 15px; }
-    .timer { display: flex; justify-content: center; gap: 15px; font-size: 2rem; font-weight: 900; }
-    .timer-box { display: flex; flex-direction: column; align-items: center; }
-    .timer-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: normal; }
-
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
-    .card { background: var(--glass-bg); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 16px; padding: 1.5rem; }
-    .card h2 { font-size: 1.2rem; color: var(--bears-orange); margin-bottom: 1rem; text-transform: uppercase; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; }
-
-    /* Media/News Styles */
-    .news-item { margin-bottom: 1rem; line-height: 1.4; }
-    .news-item a { color: #fff; text-decoration: none; font-weight: bold; font-size: 1rem; transition: color 0.2s; }
-    .news-item a:hover { color: var(--bears-orange); }
-    .video-container { position: relative; padding-bottom: 56.25%; height: 0; margin-bottom: 1rem; border-radius: 8px; overflow: hidden; }
-    .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+    header { 
+      background: var(--dark-gray); 
+      color: #fff; 
+      padding: 1rem 0; 
+      text-align: center; 
+      text-transform: uppercase; 
+      border-bottom: 5px solid var(--primary-red); 
+    }
+    
+    header h1 { 
+      margin: 0; 
+      font-size: 2.5rem; 
+      font-weight: 900; 
+      letter-spacing: 2px; 
+    }
+    
+    .nav-bar { 
+      background: #fff; 
+      padding: 12px; 
+      text-align: center; 
+      font-weight: bold; 
+      font-size: 0.95rem; 
+      border-bottom: 1px solid #ddd; 
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    
+    .nav-bar span { 
+      margin: 0 15px; 
+      color: var(--dark-gray); 
+      cursor: pointer; 
+      transition: color 0.2s;
+    }
+    
+    .nav-bar span:hover { color: var(--primary-red); }
+    
+    .container { 
+      max-width: 900px; 
+      margin: 2rem auto; 
+      background: #fff; 
+      padding: 3rem; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+      border-radius: 8px;
+    }
+    
+    .headline { 
+      font-size: 3.5rem; 
+      font-weight: 900; 
+      line-height: 1.1; 
+      margin-bottom: 15px; 
+      color: var(--bears-navy);
+    }
+    
+    .sub-headline { 
+      font-size: 1.3rem; 
+      color: #555; 
+      margin-bottom: 25px; 
+      font-style: italic; 
+    }
+    
+    .byline { 
+      font-size: 0.95rem; 
+      font-weight: bold; 
+      color: var(--primary-red); 
+      text-transform: uppercase; 
+      margin-bottom: 25px; 
+      border-bottom: 2px solid #eee; 
+      padding-bottom: 15px; 
+    }
+    
+    .hero-img-placeholder { 
+      width: 100%; 
+      height: 450px; 
+      background: linear-gradient(45deg, var(--bears-navy), var(--bears-orange)); 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      color: #fff; 
+      font-size: 1.2rem;
+      font-weight: bold; 
+      margin-bottom: 2.5rem; 
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .article-body p { 
+      font-size: 1.15rem; 
+      line-height: 1.8; 
+      margin-bottom: 1.5rem; 
+    }
+    
+    .quote-block { 
+      border-left: 5px solid var(--primary-red); 
+      padding-left: 20px; 
+      font-size: 1.4rem; 
+      font-weight: bold; 
+      color: #111; 
+      margin: 2.5rem 0; 
+      background: #f9f9f9; 
+      padding: 20px 25px; 
+      border-radius: 0 8px 8px 0;
+    }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <header>
-      <h1><span>CW18</span> Daily Hub</h1>
-    </header>
+  <header>
+    <h1>The Daily Gridiron</h1>
+  </header>
+  
+  <div class="nav-bar">
+    <span>NFL NEWS</span> | <span>RUMORS</span> | <span>FANTASY</span> | <span>BETTING</span> | <span>DRAFT</span>
+  </div>
 
-    <!-- Matchup & Countdown -->
-    <div class="countdown-banner" id="countdownBanner" style="display: none;">
-      <h3>Next Matchup</h3>
-      <div id="matchupName">Loading...</div>
-      <div class="timer" id="timer">
-        <div class="timer-box"><span id="days">00</span><span class="timer-label">Days</span></div>:
-        <div class="timer-box"><span id="hours">00</span><span class="timer-label">Hours</span></div>:
-        <div class="timer-box"><span id="minutes">00</span><span class="timer-label">Mins</span></div>
-      </div>
+  <div class="container">
+    <div class="headline">Bears say NO to Hammond: "We're Staying in Illinois, Even If We Have to Play in a Target Parking Lot"</div>
+    <div class="sub-headline">In a stunning reversal, the Chicago Bears have completely scrapped their Indiana stadium plans, declaring the border off-limits and committing to the Land of Lincoln.</div>
+    <div class="byline">By Chuck "The Scoop" Kowalski | Senior NFL Insider</div>
+    
+    <div class="hero-img-placeholder">
+      [Hero Image: Photoshopped image of the Bears logo bolted to the Illinois state border line]
     </div>
 
-    <div class="grid">
-      <!-- Latest Videos -->
-      <div class="card">
-        <h2>📺 Bears Network Live</h2>
-        <div id="videoContainer"><p style="color: var(--text-muted);">Loading latest videos...</p></div>
+    <div class="article-body">
+      <p><strong>CHICAGO, IL —</strong> In a move that has left lawmakers, fans, and real estate developers utterly bewildered, the Chicago Bears have officially pulled the plug on their highly publicized relocation to Hammond, Indiana. Despite the team's relentless push over the last several months to cross state lines, ownership has had a sudden and dramatic change of heart.</p>
+      
+      <p>The realization, according to team insiders, hit upper management late Thursday night: moving to Indiana was simply too ridiculous to stomach.</p>
+
+      <div class="quote-block">
+        "Sources tell me the Bears woke up in a cold sweat. They realized you can't be the 'Chicago' Bears if your stadium requires passing three toll booths and a fireworks megastore just to get to a tailgate." <br>
+        <span style="font-size: 1rem; color: #666; font-weight: normal; display: block; margin-top: 10px;">— Adam Shafter, NFL Network Insider</span>
       </div>
 
-      <!-- Matchup News -->
-      <div class="card">
-        <h2>📰 Breaking News</h2>
-        <div id="newsContainer"><p style="color: var(--text-muted);">Scanning for updates...</p></div>
-      </div>
+      <p>According to Shafter, the Bears' front office shredded the Indiana blueprints this morning. The team has committed to staying in Illinois no matter what the cost, even if it means resorting to drastic measures. The organization is reportedly looking at all options, including staying at Soldier Field, returning to the Arlington Heights property, or simply setting up bleachers in the parking lot of the Schaumburg Target.</p>
+      
+      <p>"Indiana is completely off the table," an anonymous team official stated. "We tried the whole 'Northwest Indiana' rebranding pitch, but deep dish pizza just doesn't taste the same when you cross the border. It's a matter of principle. We are an Illinois team. We will play in a muddy field in Naperville before we cross state lines."</p>
+      
+      <p>The sudden reversal is a massive blow to Indiana officials, who had reportedly already prepared a welcome parade featuring 500 tractors and a giant pork tenderloin sandwich. Meanwhile, Illinois politicians are scrambling to figure out if the Bears are serious this time, or if this is just another incredibly complex negotiating tactic to get free landscaping at the lakefront.</p>
+      
+      <p>Whatever the reasoning, one thing is clear: the Monsters of the Midway are refusing to become the Monsters of the Midwest. They are staying home.</p>
     </div>
   </div>
 
-  <script>
-    let kickoffTime = null;
-
-    function updateTimer() {
-      if (!kickoffTime) return;
-      const now = new Date().getTime();
-      const distance = kickoffTime - now;
-
-      if (distance < 0) {
-        document.getElementById("timer").innerHTML = "<div style='color: var(--bears-orange);'>GAME DAY</div>";
-        return;
-      }
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-      document.getElementById("days").innerText = days.toString().padStart(2, '0');
-      document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
-      document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
-    }
-
-    async function loadDashboard() {
-      try {
-        const response = await fetch(`insights.json?t=${new Date().getTime()}`); // Cache buster
-        const data = await response.json();
-
-        // 1. Setup Countdown
-        if (data.game) {
-          document.getElementById('countdownBanner').style.display = 'block';
-          document.getElementById('matchupName').innerText = data.game.matchup;
-          kickoffTime = new Date(data.game.kickoff).getTime();
-          updateTimer();
-          setInterval(updateTimer, 60000); // Update timer every minute
-        }
-
-        // 2. Load Videos
-        const vidDiv = document.getElementById('videoContainer');
-        vidDiv.innerHTML = '';
-        if (data.videos && data.videos.length > 0) {
-          data.videos.forEach(vid => {
-            vidDiv.innerHTML += `
-              <div style="margin-bottom: 1.5rem;">
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px;">${vid.title}</p>
-                <div class="video-container">
-                  <iframe src="${vid.embed_url}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-              </div>
-            `;
-          });
-        } else {
-          vidDiv.innerHTML = '<p>No recent videos found.</p>';
-        }
-
-        // 3. Load News
-        const newsDiv = document.getElementById('newsContainer');
-        newsDiv.innerHTML = '';
-        if (data.news && data.news.length > 0) {
-          data.news.forEach(item => {
-            newsDiv.innerHTML += `
-              <div class="news-item">
-                <a href="${item.link}" target="_blank">↳ ${item.headline}</a>
-              </div>
-            `;
-          });
-        } else {
-          newsDiv.innerHTML = '<p style="color: var(--text-muted);">No breaking matchup news at this exact moment. Check the videos!</p>';
-        }
-
-      } catch (error) {
-        console.error("Dashboard error:", error);
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', loadDashboard);
-  </script>
 </body>
 </html>

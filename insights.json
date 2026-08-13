@@ -1,17 +1,14 @@
-[
-    {
-        "date": "August 13, 2026",
-        "headline": "Importance of establishing QB-Center chemistry | Bears, etc. Podcast",
-        "summary": "\ud83d\udcfa Latest video from the Chicago Bears Network. <a href='https://www.youtube.com/watch?v=mggI8Xjg7jE' target='_blank' style='color: var(--bears-orange); text-decoration: none; font-weight: bold;'>\u25b6 Watch Here</a>"
-    },
-    {
-        "date": "August 13, 2026",
-        "headline": "Everything that goes into getting Soldier Field ready for a Chicago Bears game | 1920 Football Drive",
-        "summary": "\ud83d\udcfa Latest video from the Chicago Bears Network. <a href='https://www.youtube.com/watch?v=XPoEogVv_hc' target='_blank' style='color: var(--bears-orange); text-decoration: none; font-weight: bold;'>\u25b6 Watch Here</a>"
-    },
-    {
-        "date": "August 12, 2026",
-        "headline": "Can't talk, gotta run \ud83d\udca8 #dandreswift #kylemonangai #trainingcamp",
-        "summary": "\ud83c\udfc8 Training Camp update. <a href='https://www.youtube.com/shorts/ff6r89vh2_c' target='_blank' style='color: var(--bears-orange); text-decoration: none; font-weight: bold;'>\u25b6 Watch Here</a>"
-    }
-]
+{
+    "game": null,
+    "news": [],
+    "videos": [
+        {
+            "title": "Importance of establishing QB-Center chemistry | Bears, etc. Podcast",
+            "embed_url": "https://www.youtube.com/embed/mggI8Xjg7jE"
+        },
+        {
+            "title": "Everything that goes into getting Soldier Field ready for a Chicago Bears game | 1920 Football Drive",
+            "embed_url": "https://www.youtube.com/embed/XPoEogVv_hc"
+        }
+    ]
+}

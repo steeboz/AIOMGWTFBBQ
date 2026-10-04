@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Login Screen for saving state[cite: 1] -->
+    <!-- Login Screen -->
     <div id="login-screen" class="overlay active">
         <div class="modal">
             <h2>AIOMGWTFBBQ Hidden Folks</h2>
@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <!-- Win Screen[cite: 1] -->
+    <!-- Win Screen -->
     <div id="win-screen" class="overlay">
         <div class="modal">
             <h2>Level Complete!</h2>
@@ -30,26 +30,32 @@
 
     <!-- Main Game UI -->
     <div id="game-container">
-        <!-- Scene rendered full-bleed on the left[cite: 1] -->
+        <!-- Scene rendered full-bleed on top -->
         <div id="scene-wrapper">
-            <img id="scene-image" src="scene.webp" alt="Hidden Folks Scene">
-            <div id="highlights-container"></div>
+            <!-- New inner wrapper scales correctly with the injected items -->
+            <div id="scene-inner">
+                <img id="scene-image" src="scene.webp" alt="Hidden Folks Scene">
+                <!-- Dynamically injected items go here -->
+                <div id="scene-items-container"></div>
+                <div id="highlights-container"></div>
+            </div>
         </div>
         
-        <!-- Find list on the right[cite: 1] -->
-        <div id="ui-sidebar">
-            <h3>Find List</h3>
-            <p id="counter">Found: 0 of 8</p>
-            <p id="wrong-counter" class="sub-text">Wrong Clicks: 0</p>
-            <ul id="find-list"></ul>
-            <div class="controls">
+        <!-- Find list rendered at the bottom -->
+        <div id="ui-bottom">
+            <div class="stats-row">
+                <span id="counter" class="stat-badge">Found: 0 of 8</span>
+                <span id="wrong-counter" class="stat-badge sub-text">Wrong Clicks: 0</span>
                 <button id="hint-btn">Use Hint</button>
                 <button id="dev-mode-btn">Toggle Dev Mode</button>
             </div>
+            
             <div id="dev-panel" style="display:none;">
-                <p><strong>Dev Mode Active</strong></p>
-                <p>Click image to log coordinates to console.</p>
+                <p><strong>Dev Mode Active:</strong> Click image to log coordinates to console.</p>
             </div>
+
+            <!-- Scrollable Item Box -->
+            <ul id="find-list"></ul>
         </div>
     </div>
 
